@@ -12,6 +12,7 @@ namespace Statistics
 {
     public partial class MainForm : Form
     {
+        private DataBaseManager _dbMgr = new DataBaseManager();
         public MainForm()
         {
             InitializeComponent();
@@ -68,6 +69,12 @@ namespace Statistics
         private void MainForm_Load(object sender, EventArgs e)
         {
             redrawControls();
+        }
+
+        private void createUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateUserForm diag = new CreateUserForm(_dbMgr);
+            diag.ShowDialog();
         }
     }
 }

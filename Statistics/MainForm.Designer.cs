@@ -39,6 +39,9 @@
             this.lblPages = new System.Windows.Forms.Label();
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +49,9 @@
             // MainMenu
             // 
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.databaseToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(800, 27);
@@ -148,6 +153,27 @@
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // databaseToolStripMenuItem
+            // 
+            this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createUserToolStripMenuItem});
+            this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(93, 23);
+            this.databaseToolStripMenuItem.Text = "Database";
+            // 
+            // createUserToolStripMenuItem
+            // 
+            this.createUserToolStripMenuItem.Name = "createUserToolStripMenuItem";
+            this.createUserToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.createUserToolStripMenuItem.Text = "Create User";
+            this.createUserToolStripMenuItem.Click += new System.EventHandler(this.createUserToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -190,6 +216,9 @@
         private System.Windows.Forms.Button btPrevPage;
         private System.Windows.Forms.Button btNextPage;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createUserToolStripMenuItem;
     }
 }
 
