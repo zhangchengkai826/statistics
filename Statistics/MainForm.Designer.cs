@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.MainMenu = new System.Windows.Forms.MenuStrip();
-            this.DataGrid = new System.Windows.Forms.DataGridView();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainDataView = new System.Windows.Forms.DataGridView();
             this.lblTables = new System.Windows.Forms.Label();
-            this.lbTables = new System.Windows.Forms.ListBox();
+            this.TblLists = new System.Windows.Forms.ListBox();
             this.btOpenTbl = new System.Windows.Forms.Button();
             this.btCreateTbl = new System.Windows.Forms.Button();
             this.btDelTbl = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblPages = new System.Windows.Forms.Label();
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).BeginInit();
             this.SuspendLayout();
             // 
             // MainMenu
@@ -53,14 +53,20 @@
             this.MainMenu.TabIndex = 0;
             this.MainMenu.Text = "menuStrip1";
             // 
-            // DataGrid
+            // fileToolStripMenuItem
             // 
-            this.DataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGrid.Location = new System.Drawing.Point(206, 27);
-            this.DataGrid.Name = "DataGrid";
-            this.DataGrid.RowTemplate.Height = 23;
-            this.DataGrid.Size = new System.Drawing.Size(594, 476);
-            this.DataGrid.TabIndex = 1;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // MainDataView
+            // 
+            this.MainDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MainDataView.Location = new System.Drawing.Point(206, 27);
+            this.MainDataView.Name = "MainDataView";
+            this.MainDataView.RowTemplate.Height = 23;
+            this.MainDataView.Size = new System.Drawing.Size(594, 476);
+            this.MainDataView.TabIndex = 1;
             // 
             // lblTables
             // 
@@ -72,14 +78,14 @@
             this.lblTables.Text = "Tables";
             this.lblTables.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lbTables
+            // TblLists
             // 
-            this.lbTables.FormattingEnabled = true;
-            this.lbTables.ItemHeight = 12;
-            this.lbTables.Location = new System.Drawing.Point(12, 53);
-            this.lbTables.Name = "lbTables";
-            this.lbTables.Size = new System.Drawing.Size(188, 352);
-            this.lbTables.TabIndex = 3;
+            this.TblLists.FormattingEnabled = true;
+            this.TblLists.ItemHeight = 12;
+            this.TblLists.Location = new System.Drawing.Point(12, 53);
+            this.TblLists.Name = "TblLists";
+            this.TblLists.Size = new System.Drawing.Size(188, 352);
+            this.TblLists.TabIndex = 3;
             // 
             // btOpenTbl
             // 
@@ -112,15 +118,15 @@
             this.btDelTbl.Text = "Delete";
             this.btDelTbl.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lblPages
             // 
-            this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(455, 521);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "0 / 0";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPages.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblPages.Location = new System.Drawing.Point(455, 521);
+            this.lblPages.Name = "lblPages";
+            this.lblPages.Size = new System.Drawing.Size(100, 23);
+            this.lblPages.TabIndex = 7;
+            this.lblPages.Text = "0 / 0";
+            this.lblPages.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btPrevPage
             // 
@@ -142,12 +148,6 @@
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
             // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -155,21 +155,23 @@
             this.ClientSize = new System.Drawing.Size(800, 561);
             this.Controls.Add(this.btNextPage);
             this.Controls.Add(this.btPrevPage);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPages);
             this.Controls.Add(this.btDelTbl);
             this.Controls.Add(this.btCreateTbl);
             this.Controls.Add(this.btOpenTbl);
-            this.Controls.Add(this.lbTables);
+            this.Controls.Add(this.TblLists);
             this.Controls.Add(this.lblTables);
-            this.Controls.Add(this.DataGrid);
+            this.Controls.Add(this.MainDataView);
             this.Controls.Add(this.MainMenu);
             this.MainMenuStrip = this.MainMenu;
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.Text = "Statistics version 2.0rc Author: Chengkai Zhang ";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,13 +180,13 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.DataGridView DataGrid;
+        private System.Windows.Forms.DataGridView MainDataView;
         private System.Windows.Forms.Label lblTables;
-        private System.Windows.Forms.ListBox lbTables;
+        private System.Windows.Forms.ListBox TblLists;
         private System.Windows.Forms.Button btOpenTbl;
         private System.Windows.Forms.Button btCreateTbl;
         private System.Windows.Forms.Button btDelTbl;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPages;
         private System.Windows.Forms.Button btPrevPage;
         private System.Windows.Forms.Button btNextPage;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
