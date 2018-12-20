@@ -10,19 +10,18 @@ using System.Windows.Forms;
 
 namespace Statistics
 {
-    public partial class CreateUserForm : Form
+    public partial class StartNewConnForm : Form
     {
-        private DataBaseManager _dbMgr;
-
-        public CreateUserForm(DataBaseManager dbMgr)
+        private DataBaseManager _dbMgr = null;
+        public StartNewConnForm(DataBaseManager dbMgr)
         {
             InitializeComponent();
             _dbMgr = dbMgr;
         }
 
-        private void btCreate_Click(object sender, EventArgs e)
+        private void btConn_Click(object sender, EventArgs e)
         {
-            _dbMgr.createUser(tbUsrName.Text, tbPw.Text);
+            _dbMgr.StartConnection(tbUsrName.Text, tbPw.Text);
             Close();
         }
     }

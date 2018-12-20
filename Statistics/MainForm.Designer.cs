@@ -1,4 +1,6 @@
-﻿namespace Statistics
+﻿using System.Windows.Forms;
+
+namespace Statistics
 {
     partial class MainForm
     {
@@ -30,18 +32,19 @@
         {
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainDataView = new System.Windows.Forms.DataGridView();
             this.lblTables = new System.Windows.Forms.Label();
-            this.TblLists = new System.Windows.Forms.ListBox();
+            this.tblLists = new System.Windows.Forms.ListBox();
             this.btOpenTbl = new System.Windows.Forms.Button();
             this.btCreateTbl = new System.Windows.Forms.Button();
             this.btDelTbl = new System.Windows.Forms.Button();
             this.lblPages = new System.Windows.Forms.Label();
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).BeginInit();
             this.SuspendLayout();
@@ -64,6 +67,35 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // databaseToolStripMenuItem
+            // 
+            this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createUserToolStripMenuItem,
+            this.newConnectionToolStripMenuItem});
+            this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(93, 23);
+            this.databaseToolStripMenuItem.Text = "Database";
+            // 
+            // createUserToolStripMenuItem
+            // 
+            this.createUserToolStripMenuItem.Name = "createUserToolStripMenuItem";
+            this.createUserToolStripMenuItem.Size = new System.Drawing.Size(204, 24);
+            this.createUserToolStripMenuItem.Text = "Create User";
+            this.createUserToolStripMenuItem.Click += new System.EventHandler(this.createUserToolStripMenuItem_Click);
+            // 
+            // newConnectionToolStripMenuItem
+            // 
+            this.newConnectionToolStripMenuItem.Name = "newConnectionToolStripMenuItem";
+            this.newConnectionToolStripMenuItem.Size = new System.Drawing.Size(204, 24);
+            this.newConnectionToolStripMenuItem.Text = "New Connection";
+            this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.newConnectionToolStripMenuItem_Click);
+            // 
             // MainDataView
             // 
             this.MainDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -83,14 +115,15 @@
             this.lblTables.Text = "Tables";
             this.lblTables.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TblLists
+            // tblLists
             // 
-            this.TblLists.FormattingEnabled = true;
-            this.TblLists.ItemHeight = 12;
-            this.TblLists.Location = new System.Drawing.Point(12, 53);
-            this.TblLists.Name = "TblLists";
-            this.TblLists.Size = new System.Drawing.Size(188, 352);
-            this.TblLists.TabIndex = 3;
+            this.tblLists.Font = new System.Drawing.Font("UD Digi Kyokasho N-R", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tblLists.FormattingEnabled = true;
+            this.tblLists.ItemHeight = 15;
+            this.tblLists.Location = new System.Drawing.Point(12, 53);
+            this.tblLists.Name = "tblLists";
+            this.tblLists.Size = new System.Drawing.Size(188, 349);
+            this.tblLists.TabIndex = 3;
             // 
             // btOpenTbl
             // 
@@ -101,6 +134,7 @@
             this.btOpenTbl.TabIndex = 4;
             this.btOpenTbl.Text = "Open";
             this.btOpenTbl.UseVisualStyleBackColor = true;
+            this.btOpenTbl.Click += new System.EventHandler(this.btOpenTbl_Click);
             // 
             // btCreateTbl
             // 
@@ -111,6 +145,7 @@
             this.btCreateTbl.TabIndex = 5;
             this.btCreateTbl.Text = "Create";
             this.btCreateTbl.UseVisualStyleBackColor = true;
+            this.btCreateTbl.Click += new System.EventHandler(this.btCreateTbl_Click);
             // 
             // btDelTbl
             // 
@@ -122,6 +157,7 @@
             this.btDelTbl.TabIndex = 6;
             this.btDelTbl.Text = "Delete";
             this.btDelTbl.UseVisualStyleBackColor = true;
+            this.btDelTbl.Click += new System.EventHandler(this.btDelTbl_Click);
             // 
             // lblPages
             // 
@@ -153,27 +189,6 @@
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
             // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // databaseToolStripMenuItem
-            // 
-            this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createUserToolStripMenuItem});
-            this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(93, 23);
-            this.databaseToolStripMenuItem.Text = "Database";
-            // 
-            // createUserToolStripMenuItem
-            // 
-            this.createUserToolStripMenuItem.Name = "createUserToolStripMenuItem";
-            this.createUserToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.createUserToolStripMenuItem.Text = "Create User";
-            this.createUserToolStripMenuItem.Click += new System.EventHandler(this.createUserToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -185,7 +200,7 @@
             this.Controls.Add(this.btDelTbl);
             this.Controls.Add(this.btCreateTbl);
             this.Controls.Add(this.btOpenTbl);
-            this.Controls.Add(this.TblLists);
+            this.Controls.Add(this.tblLists);
             this.Controls.Add(this.lblTables);
             this.Controls.Add(this.MainDataView);
             this.Controls.Add(this.MainMenu);
@@ -193,6 +208,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.Text = "Statistics version 2.0rc Author: Chengkai Zhang ";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainMenu.ResumeLayout(false);
@@ -208,7 +224,7 @@
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.DataGridView MainDataView;
         private System.Windows.Forms.Label lblTables;
-        private System.Windows.Forms.ListBox TblLists;
+        private System.Windows.Forms.ListBox tblLists;
         private System.Windows.Forms.Button btOpenTbl;
         private System.Windows.Forms.Button btCreateTbl;
         private System.Windows.Forms.Button btDelTbl;
@@ -219,6 +235,7 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createUserToolStripMenuItem;
+        private ToolStripMenuItem newConnectionToolStripMenuItem;
     }
 }
 

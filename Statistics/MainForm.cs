@@ -12,7 +12,10 @@ namespace Statistics
 {
     public partial class MainForm : Form
     {
-        private DataBaseManager _dbMgr = new DataBaseManager();
+        private DataBaseManager _dbMgr = null;
+        private BindingList<object> tblNames = new BindingList<object>();
+        public BindingList<object> TblNames { get => tblNames; set => tblNames = value; }
+
         public MainForm()
         {
             InitializeComponent();
@@ -39,8 +42,8 @@ namespace Statistics
             lblTables.Location = _getPointFromPercentage(0, 0.05);
             lblTables.Size = _getSizeFromPercentage(0.25, 0.1);
 
-            TblLists.Location = _getPointFromPercentage(0, 0.15);
-            TblLists.Size = _getSizeFromPercentage(0.25, 0.55);
+            tblLists.Location = _getPointFromPercentage(0, 0.15);
+            tblLists.Size = _getSizeFromPercentage(0.25, 0.55);
 
             btOpenTbl.Location = _getPointFromPercentage(0, 0.7);
             btOpenTbl.Size = _getSizeFromPercentage(0.25, 0.1);
@@ -68,6 +71,8 @@ namespace Statistics
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            _dbMgr = new DataBaseManager(this);
+            tblLists.DataSource = tblNames;
             redrawControls();
         }
 
@@ -75,6 +80,42 @@ namespace Statistics
         {
             CreateUserForm diag = new CreateUserForm(_dbMgr);
             diag.ShowDialog();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _dbMgr.CloseConnection();
+        }
+
+        private void newConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartNewConnForm diag = new StartNewConnForm(_dbMgr);
+            diag.ShowDialog();
+        }
+
+        private void btCreateTbl_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.isConnected())
+            {
+                CreateTblForm diag = new CreateTblForm(_dbMgr);
+                diag.Show();
+            }
+        }
+
+        private void btDelTbl_Click(object sender, EventArgs e)
+        {
+            if(_dbMgr.isConnected() && tblLists.SelectedItem != null && tblLists.SelectedItem.ToString() != "")
+            {
+                _dbMgr.DeleteTable(tblLists.SelectedItem.ToString());
+            }
+        }
+
+        private void btOpenTbl_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.isConnected() && tblLists.SelectedItem != null && tblLists.SelectedItem.ToString() != "")
+            {
+                _dbMgr.OpenTable(tblLists.SelectedItem.ToString());
+            }
         }
     }
 }
