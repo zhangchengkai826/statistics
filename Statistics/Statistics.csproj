@@ -79,6 +79,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenameTblForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RenameTblForm.Designer.cs">
+      <DependentUpon>RenameTblForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StartNewConnForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RenameTblForm.resx">
+      <DependentUpon>RenameTblForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StartNewConnForm.resx">
       <DependentUpon>StartNewConnForm.cs</DependentUpon>
     </EmbeddedResource>

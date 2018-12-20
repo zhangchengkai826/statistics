@@ -30,6 +30,7 @@ namespace Statistics
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +46,11 @@ namespace Statistics
             this.lblPages = new System.Windows.Forms.Label();
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
+            this.cmTblList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).BeginInit();
+            this.cmTblList.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainMenu
@@ -117,6 +121,7 @@ namespace Statistics
             // 
             // tblLists
             // 
+            this.tblLists.ContextMenuStrip = this.cmTblList;
             this.tblLists.Font = new System.Drawing.Font("UD Digi Kyokasho N-R", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tblLists.FormattingEnabled = true;
             this.tblLists.ItemHeight = 15;
@@ -124,6 +129,7 @@ namespace Statistics
             this.tblLists.Name = "tblLists";
             this.tblLists.Size = new System.Drawing.Size(188, 349);
             this.tblLists.TabIndex = 3;
+            this.tblLists.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tblLists_MouseDown);
             // 
             // btOpenTbl
             // 
@@ -189,6 +195,21 @@ namespace Statistics
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
             // 
+            // cmTblList
+            // 
+            this.cmTblList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem});
+            this.cmTblList.Name = "cmTblList";
+            this.cmTblList.Size = new System.Drawing.Size(181, 50);
+            this.cmTblList.Opening += new System.ComponentModel.CancelEventHandler(this.cmTblList_Opening);
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.renameToolStripMenuItem.Text = "Rename";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -214,6 +235,7 @@ namespace Statistics
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).EndInit();
+            this.cmTblList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,6 +258,8 @@ namespace Statistics
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createUserToolStripMenuItem;
         private ToolStripMenuItem newConnectionToolStripMenuItem;
+        private ContextMenuStrip cmTblList;
+        private ToolStripMenuItem renameToolStripMenuItem;
     }
 }
 

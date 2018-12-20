@@ -117,5 +117,24 @@ namespace Statistics
                 _dbMgr.OpenTable(tblLists.SelectedItem.ToString());
             }
         }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.isConnected() && tblLists.SelectedItem != null && tblLists.SelectedItem.ToString() != "")
+            {
+                RenameTblForm diag = new RenameTblForm(_dbMgr, tblLists.SelectedItem.ToString());
+                diag.ShowDialog();
+            }
+        }
+
+        private void tblLists_MouseDown(object sender, MouseEventArgs e)
+        {
+            tblLists.SelectedIndex = tblLists.IndexFromPoint(e.X, e.Y); 
+        }
+
+        private void cmTblList_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = (tblLists.SelectedIndex == -1);
+        }
     }
 }
