@@ -137,5 +137,27 @@ namespace Statistics
             if (dsBackend.ContainsKey(NumPages)) dsBackend.Remove(NumPages);
             ShowLastPageInDefaultOrder();
         }
+
+        public void DeleteRow(object sender, EventArgs e)
+        {
+            if (form.MainDataGrid.SelectedCells.Count < 1) return;
+            try
+            {
+                int id = (int)form.MainDataGrid.CurrentRow.Cells[0].Value;
+                int idInpage = id - (currPage - 1) * RECORDS_PER_PAGE - 1; // start from 0
+                int idInternal = (int)dsBackend[currPage].Tables[0].Rows[idInpage][0];
+                string strSql = String.Format(@"DELETE FROM {0} WHERE _id_internal={1}", Name, idInternal);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, Owner.Conn);
+                cmd.ExecuteNonQuery();
+                NumRecords -= 1;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            for(int i=currPage;i<=NumPages+1;i++)
+                if (dsBackend.ContainsKey(i)) dsBackend.Remove(i);
+            showPageAt(currPage);
+        }
     }
 }

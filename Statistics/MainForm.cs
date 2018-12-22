@@ -151,5 +151,15 @@ namespace Statistics
         {
             e.Cancel = (tblLists.SelectedIndex == -1);
         }
+
+        private void mainDataGrid_MouseDown(object sender, MouseEventArgs e)
+        {
+            var hti = MainDataGrid.HitTest(e.X, e.Y);
+            if (hti.RowIndex >= 0 && hti.ColumnIndex >= 0)
+            {
+                //MainDataGrid.ClearSelection();
+                MainDataGrid.CurrentCell = MainDataGrid[hti.ColumnIndex, hti.RowIndex];
+            }
+        }
     }
 }

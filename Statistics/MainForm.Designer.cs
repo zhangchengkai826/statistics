@@ -116,6 +116,7 @@ namespace Statistics
             this.mainDataGrid.RowTemplate.Height = 23;
             this.mainDataGrid.Size = new System.Drawing.Size(594, 476);
             this.mainDataGrid.TabIndex = 1;
+            this.mainDataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainDataGrid_MouseDown);
             // 
             // cmMainGrid
             // 
@@ -150,6 +151,7 @@ namespace Statistics
             // tblLists
             // 
             this.tblLists.ContextMenuStrip = this.cmTblList;
+            this.tblLists.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.tblLists.Font = new System.Drawing.Font("UD Digi Kyokasho N-R", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tblLists.FormattingEnabled = true;
             this.tblLists.ItemHeight = 15;
@@ -157,10 +159,9 @@ namespace Statistics
             this.tblLists.Name = "tblLists";
             this.tblLists.Size = new System.Drawing.Size(188, 349);
             this.tblLists.TabIndex = 3;
+            this.tblLists.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tblLists_DrawItem);
             this.tblLists.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tblLists_MouseDown);
-            this.tblLists.DrawMode = DrawMode.OwnerDrawFixed;
-            this.tblLists.DrawItem += new DrawItemEventHandler(tblLists_DrawItem);
-            //
+            // 
             // cmTblList
             // 
             this.cmTblList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -312,6 +313,7 @@ namespace Statistics
         public ContextMenuStrip CmMainGrid { get => cmMainGrid; }
         public ListBox TblLists { get => tblLists; }
         public ToolStripMenuItem InsertToolStripMenuItem { get => insertToolStripMenuItem; }
+        public ToolStripMenuItem DeleteToolStripMenuItem { get => deleteToolStripMenuItem; }
         public Label Lblrecords { get => lblRecords; }
     }
 }

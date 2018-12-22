@@ -17,6 +17,7 @@ namespace Statistics
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }
         private EventHandler insertRowHandler = null;
+        private EventHandler deleteRowHandler = null;
 
         public DataBaseManager(MainForm form)
         {
@@ -179,20 +180,28 @@ namespace Statistics
             form.MainDataGrid.ContextMenuStrip = null;
             form.MainDataGrid.DataSource = null;
             form.InsertToolStripMenuItem.Click -= insertRowHandler;
+            form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
             insertRowHandler = null;
+            deleteRowHandler = null;
             form.Lblrecords.Text = "0 record(s)";
             form.LblPages.Text = "0 / 0";
         }
         public void OpenTable(string tblName)
         {
-            if (currtable != null) form.InsertToolStripMenuItem.Click -= insertRowHandler;
+            if (currtable != null)
+            {
+                form.InsertToolStripMenuItem.Click -= insertRowHandler;
+                form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
+            }
             currtable = tblName;
             form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
             form.TblLists.Invalidate();
             tables[currtable].show();
             form.MainDataGrid.ContextMenuStrip = form.CmMainGrid;
             insertRowHandler = new System.EventHandler(tables[currtable].InsertRow);
+            deleteRowHandler = new System.EventHandler(tables[currtable].DeleteRow);
             form.InsertToolStripMenuItem.Click += insertRowHandler;
+            form.DeleteToolStripMenuItem.Click += deleteRowHandler;
             form.Lblrecords.Text = tables[currtable].NumRecords + " record(s)";
         }
         public void RenameTable(string oldName, string newName)
