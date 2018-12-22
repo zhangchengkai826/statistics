@@ -110,7 +110,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbCol);
             this.Name = "SortForm";
-            this.Text = "SortForm";
+            this.Text = "Sort Wizard";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

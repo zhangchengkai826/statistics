@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Statistics
 {
@@ -89,7 +90,7 @@ namespace Statistics
                 conn = new NpgsqlConnection(strConn);
                 conn.Open();
 
-                _updateTblList();
+                UpdateTableList();
 
                 MessageBox.Show(String.Format(@"Successfully connected as '{0}'!", userName));
             }
@@ -111,23 +112,30 @@ namespace Statistics
             }
         }
 
-        private void _updateTblList()
+        public void UpdateTableList()
         {
-            string strSql = @"SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
-            NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
-            NpgsqlDataReader rdr = cmd.ExecuteReader();
-
-            form.TblNames.Clear();
-            Dictionary<string, TableManager> tables_tmp = new Dictionary<string, TableManager>();
-            while (rdr.Read())
+            try
             {
-                string tbName = rdr.GetString(0);
-                form.TblNames.Add(tbName);
-                if (tables.ContainsKey(tbName)) tables_tmp[tbName] = tables[tbName];
-                else tables_tmp[tbName] = new TableManager(tbName, this, form);
+                string strSql = @"SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
+                NpgsqlDataReader rdr = cmd.ExecuteReader();
+
+                form.TblNames.Clear();
+                Dictionary<string, TableManager> tables_tmp = new Dictionary<string, TableManager>();
+                while (rdr.Read())
+                {
+                    string tbName = rdr.GetString(0);
+                    form.TblNames.Add(tbName);
+                    if (tables.ContainsKey(tbName)) tables_tmp[tbName] = tables[tbName];
+                    else tables_tmp[tbName] = new TableManager(tbName, this, form);
+                }
+                rdr.Close();
+                tables = tables_tmp;
             }
-            rdr.Close();
-            tables = tables_tmp;
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         public void CreateTable(string tblName, ref Dictionary<string, string> tblCols)
@@ -143,7 +151,7 @@ namespace Statistics
                 NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
                 cmd.ExecuteNonQuery();
 
-                _updateTblList();
+                UpdateTableList();
 
                 MessageBox.Show(String.Format(@"Table '{0}' created successfully!", tblName));
             }
@@ -162,7 +170,7 @@ namespace Statistics
                 NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
                 cmd.ExecuteNonQuery();
 
-                _updateTblList();
+                UpdateTableList();
 
                 MessageBox.Show(String.Format(@"Table '{0}' deleted!", tblName));
             }
@@ -228,7 +236,7 @@ namespace Statistics
                 tables[newName] = tables[oldName];
                 tables.Remove(oldName);
 
-                _updateTblList();
+                UpdateTableList();
 
                 MessageBox.Show(String.Format(@"Rename table {0} to {1}!", oldName, newName));
             }
@@ -237,6 +245,26 @@ namespace Statistics
                 MessageBox.Show(exc.Message);
             }
             if (oldName == currtable) OpenTable(newName);
+        }
+        public void ImportTable(string fileName)
+        {
+            try
+            {
+                string[] cols, vals;
+                using (StreamReader sr = new StreamReader(fileName))
+                {
+                    string line = sr.ReadLine();
+                    cols = line.Split(',');
+                    line = sr.ReadLine();
+                    vals = line.Split(',');
+                }
+                DetermineTypeForm diag = new DetermineTypeForm(cols, vals, fileName, this);
+                diag.Show();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
     }
 }

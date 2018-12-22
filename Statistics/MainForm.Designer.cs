@@ -55,6 +55,10 @@ namespace Statistics
             this.lblRecords = new System.Windows.Forms.Label();
             this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importTableDiag = new System.Windows.Forms.OpenFileDialog();
+            this.goToPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -76,6 +80,9 @@ namespace Statistics
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importCSVToolStripMenuItem,
+            this.exportCSVToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
             this.fileToolStripMenuItem.Text = "File";
@@ -243,6 +250,7 @@ namespace Statistics
             this.btPrevPage.TabIndex = 8;
             this.btPrevPage.Text = "Prev Page";
             this.btPrevPage.UseVisualStyleBackColor = true;
+            this.btPrevPage.Click += new System.EventHandler(this.btPrevPage_Click);
             // 
             // btNextPage
             // 
@@ -253,6 +261,7 @@ namespace Statistics
             this.btNextPage.TabIndex = 9;
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
+            this.btNextPage.Click += new System.EventHandler(this.btNextPage_Click);
             // 
             // lblRecords
             // 
@@ -267,6 +276,7 @@ namespace Statistics
             // tableToolStripMenuItem
             // 
             this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.goToPageToolStripMenuItem,
             this.sortToolStripMenuItem});
             this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
             this.tableToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
@@ -278,6 +288,31 @@ namespace Statistics
             this.sortToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.sortToolStripMenuItem.Text = "Sort";
             this.sortToolStripMenuItem.Click += new System.EventHandler(this.sortToolStripMenuItem_Click);
+            // 
+            // importCSVToolStripMenuItem
+            // 
+            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
+            this.importCSVToolStripMenuItem.Text = "Import Table";
+            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
+            // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
+            this.exportCSVToolStripMenuItem.Text = "Export Table";
+            // 
+            // importTableDiag
+            // 
+            this.importTableDiag.FileName = "openFileDialog1";
+            this.importTableDiag.Filter = "CSV Files|*.csv";
+            // 
+            // goToPageToolStripMenuItem
+            // 
+            this.goToPageToolStripMenuItem.Name = "goToPageToolStripMenuItem";
+            this.goToPageToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.goToPageToolStripMenuItem.Text = "Go To Page";
+            this.goToPageToolStripMenuItem.Click += new System.EventHandler(this.goToPageToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -338,6 +373,10 @@ namespace Statistics
         private ToolStripMenuItem renameColumnToolStripMenuItem;
         private ToolStripMenuItem tableToolStripMenuItem;
         private ToolStripMenuItem sortToolStripMenuItem;
+        private ToolStripMenuItem importCSVToolStripMenuItem;
+        private ToolStripMenuItem exportCSVToolStripMenuItem;
+        private OpenFileDialog importTableDiag;
+        private ToolStripMenuItem goToPageToolStripMenuItem;
 
         public Label LblPages { get => lblPages; }
         public DataGridView MainDataGrid { get => mainDataGrid; }

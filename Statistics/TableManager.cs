@@ -231,5 +231,15 @@ namespace Statistics
             SortForm diag = new SortForm(this, columnNames, order);
             diag.ShowDialog();
         }
+
+        public void ShowPrevPage()
+        {
+            ShowPageAt(currPage - 1);
+        }
+
+        public void ShowNextPage()
+        {
+            ShowPageAt(currPage + 1);
+        }
     }
 }

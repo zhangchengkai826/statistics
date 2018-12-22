@@ -71,6 +71,18 @@
       <DependentUpon>CreateUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataBaseManager.cs" />
+    <Compile Include="DetermineTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetermineTypeForm.Designer.cs">
+      <DependentUpon>DetermineTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GoToPageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GoToPageForm.Designer.cs">
+      <DependentUpon>GoToPageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="InsertForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +127,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateUserForm.resx">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetermineTypeForm.resx">
+      <DependentUpon>DetermineTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoToPageForm.resx">
+      <DependentUpon>GoToPageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertForm.resx">
       <DependentUpon>InsertForm.cs</DependentUpon>

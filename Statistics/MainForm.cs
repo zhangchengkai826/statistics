@@ -186,5 +186,45 @@ namespace Statistics
             }
             _dbMgr.Tables[_dbMgr.Currtable].SortRecordsByColumn();
         }
+
+        private void importCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(_dbMgr.Conn == null)
+            {
+                MessageBox.Show("Please start a db connection first!");
+                return;
+            }
+            if (importTableDiag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _dbMgr.ImportTable(importTableDiag.FileName);
+            }
+        }
+
+        private void btPrevPage_Click(object sender, EventArgs e)
+        {
+            if(_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].ShowPrevPage();
+            }
+        }
+
+        private void btNextPage_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].ShowNextPage();
+            }
+        }
+
+        private void goToPageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                GoToPageForm diag = new GoToPageForm(_dbMgr.Tables[_dbMgr.Currtable].NumPages, _dbMgr.Tables[_dbMgr.Currtable].CurrPage);
+                DialogResult dr = diag.ShowDialog();
+                if (_dbMgr.Tables[_dbMgr.Currtable].CurrPage == diag.PageGoTo || dr != DialogResult.OK) return;
+                _dbMgr.Tables[_dbMgr.Currtable].ShowPageAt(diag.PageGoTo);
+            }
+        }
     }
 }
