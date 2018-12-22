@@ -19,6 +19,7 @@ namespace Statistics
         private EventHandler insertRowHandler = null;
         private EventHandler deleteRowHandler = null;
         private EventHandler renameColHandler = null;
+        private DataGridViewCellEventHandler updateDataHandler = null;
 
         public DataBaseManager(MainForm form)
         {
@@ -183,9 +184,11 @@ namespace Statistics
             form.InsertToolStripMenuItem.Click -= insertRowHandler;
             form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
             form.RenameColumnToolStripMenuItem.Click -= renameColHandler;
+            form.MainDataGrid.CellEndEdit += updateDataHandler;
             insertRowHandler = null;
             deleteRowHandler = null;
             renameColHandler = null;
+            updateDataHandler = null;
             form.Lblrecords.Text = "0 record(s)";
             form.LblPages.Text = "0 / 0";
         }
@@ -196,6 +199,7 @@ namespace Statistics
                 form.InsertToolStripMenuItem.Click -= insertRowHandler;
                 form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
                 form.RenameColumnToolStripMenuItem.Click -= renameColHandler;
+                form.MainDataGrid.CellEndEdit -= updateDataHandler;
             }
             currtable = tblName;
             form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
@@ -205,9 +209,11 @@ namespace Statistics
             insertRowHandler = new System.EventHandler(tables[currtable].InsertRow);
             deleteRowHandler = new System.EventHandler(tables[currtable].DeleteRow);
             renameColHandler = new System.EventHandler(tables[currtable].RenameCol);
+            updateDataHandler = new DataGridViewCellEventHandler(tables[currtable].UpdateData);
             form.InsertToolStripMenuItem.Click += insertRowHandler;
             form.DeleteToolStripMenuItem.Click += deleteRowHandler;
             form.RenameColumnToolStripMenuItem.Click += renameColHandler;
+            form.MainDataGrid.CellEndEdit += updateDataHandler;
             form.Lblrecords.Text = tables[currtable].NumRecords + " record(s)";
         }
         public void RenameTable(string oldName, string newName)

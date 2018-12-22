@@ -71,6 +71,7 @@ namespace Statistics
 
         private void tblLists_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
         {
+            if (e.Index < 0) return;
             e.DrawBackground();
             Graphics g = e.Graphics;
             if(e.Index == CurrTblIndexInTblLists)
@@ -158,7 +159,22 @@ namespace Statistics
             if (hti.RowIndex >= 0 && hti.ColumnIndex >= 0)
             {
                 MainDataGrid.CurrentCell = MainDataGrid[hti.ColumnIndex, hti.RowIndex];
+                return;
             }
+            if(hti.ColumnIndex >=0 && hti.ColumnIndex < MainDataGrid.ColumnCount && hti.RowIndex < 0)
+            {
+                MainDataGrid.CurrentCell = MainDataGrid[hti.ColumnIndex, 0];
+            }
+        }
+
+        private void mainDataGrid_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show(e.Exception.Message);
+        }
+
+        private void cmMainGrid_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = MainDataGrid.IsCurrentCellInEditMode;
         }
     }
 }

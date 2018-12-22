@@ -121,6 +121,7 @@ namespace Statistics
             dt = dsBackend[currPage].Tables[0].Copy();
             dt = _normalizeDt(dt);
             form.MainDataGrid.DataSource = dt;
+            form.MainDataGrid.Columns[0].ReadOnly = true;
         }
 
         private void ShowLastPageInDefaultOrder()
@@ -144,8 +145,8 @@ namespace Statistics
             try
             {
                 int id = (int)form.MainDataGrid.CurrentRow.Cells[0].Value;
-                int idInpage = id - (currPage - 1) * RECORDS_PER_PAGE - 1; // start from 0
-                int idInternal = (int)dsBackend[currPage].Tables[0].Rows[idInpage][0];
+                int idInDa = id - (currPage - 1) * RECORDS_PER_PAGE - 1; // start from 0
+                int idInternal = (int)dsBackend[currPage].Tables[0].Rows[idInDa][0];
                 string strSql = String.Format(@"DELETE FROM {0} WHERE _id_internal={1}", Name, idInternal);
                 NpgsqlCommand cmd = new NpgsqlCommand(strSql, Owner.Conn);
                 cmd.ExecuteNonQuery();
@@ -186,7 +187,34 @@ namespace Statistics
                 MessageBox.Show(exc.Message);
             }
             dsBackend.Clear();
-            ShowLastPageInDefaultOrder();
+            showPageAt(currPage);
+        }
+
+        public void UpdateData(object sender, DataGridViewCellEventArgs e)
+        {
+            object value = form.MainDataGrid[e.ColumnIndex, e.RowIndex].Value;
+            if(value == null || value == DBNull.Value || String.IsNullOrWhiteSpace(value.ToString()))
+            {
+                MessageBox.Show("Please specify a data!");
+                showPageAt(currPage);
+                return;
+            }
+            int id = (int)form.MainDataGrid.CurrentRow.Cells[0].Value;
+            int idInDa = id - (currPage - 1) * RECORDS_PER_PAGE - 1; // start from 0
+            int idInternal = (int)dsBackend[currPage].Tables[0].Rows[idInDa][0];
+            string colName = form.MainDataGrid[e.ColumnIndex, e.RowIndex].OwningColumn.Name;
+            try
+            {
+                string strSql = String.Format(@"UPDATE {0} SET {1}='{2}' WHERE _id_internal='{3}'", Name, colName, value, idInternal);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, Owner.Conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            dsBackend.Remove(currPage);
+            showPageAt(currPage);
         }
     }
 }

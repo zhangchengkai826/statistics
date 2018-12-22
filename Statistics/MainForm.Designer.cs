@@ -41,6 +41,7 @@ namespace Statistics
             this.cmMainGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTables = new System.Windows.Forms.Label();
             this.tblLists = new System.Windows.Forms.ListBox();
             this.cmTblList = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -52,7 +53,6 @@ namespace Statistics
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
-            this.renameColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -117,6 +117,7 @@ namespace Statistics
             this.mainDataGrid.RowTemplate.Height = 23;
             this.mainDataGrid.Size = new System.Drawing.Size(594, 476);
             this.mainDataGrid.TabIndex = 1;
+            this.mainDataGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.mainDataGrid_DataError);
             this.mainDataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainDataGrid_MouseDown);
             // 
             // cmMainGrid
@@ -127,6 +128,7 @@ namespace Statistics
             this.renameColumnToolStripMenuItem});
             this.cmMainGrid.Name = "contextMenuStrip1";
             this.cmMainGrid.Size = new System.Drawing.Size(196, 98);
+            this.cmMainGrid.Opening += new System.ComponentModel.CancelEventHandler(this.cmMainGrid_Opening);
             // 
             // insertToolStripMenuItem
             // 
@@ -139,6 +141,12 @@ namespace Statistics
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.deleteToolStripMenuItem.Text = "Delete Row";
+            // 
+            // renameColumnToolStripMenuItem
+            // 
+            this.renameColumnToolStripMenuItem.Name = "renameColumnToolStripMenuItem";
+            this.renameColumnToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
+            this.renameColumnToolStripMenuItem.Text = "Rename Column";
             // 
             // lblTables
             // 
@@ -252,12 +260,6 @@ namespace Statistics
             this.lblRecords.TabIndex = 10;
             this.lblRecords.Text = "0 record(s)";
             this.lblRecords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // renameColumnToolStripMenuItem
-            // 
-            this.renameColumnToolStripMenuItem.Name = "renameColumnToolStripMenuItem";
-            this.renameColumnToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
-            this.renameColumnToolStripMenuItem.Text = "Rename Column";
             // 
             // MainForm
             // 
