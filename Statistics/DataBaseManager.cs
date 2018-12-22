@@ -10,20 +10,21 @@ namespace Statistics
 {
     public class DataBaseManager
     {
-        private NpgsqlConnection _conn = null;
-        private MainForm _form = null;
+        private NpgsqlConnection conn = null;
+        private MainForm form = null;
         private Dictionary<string, TableManager> tables = new Dictionary<string, TableManager>();
-        private TableManager currtable = null;
-        public TableManager Currtable { get; }
+        private string currtable = null;
+        public string Currtable { get => currtable; }
+        public NpgsqlConnection Conn { get => conn; }
 
         public DataBaseManager(MainForm form)
         {
-            _form = form;
+            this.form = form;
         }
 
         public bool isConnected()
         {
-            return _conn != null;
+            return Conn != null;
         }
 
         public void createUser(string userName, string passWord)
@@ -70,9 +71,9 @@ namespace Statistics
         {
             try
             {
-                if (_conn != null)
+                if (conn != null)
                 {
-                    _conn.Close();
+                    conn.Close();
                 }
                 string strConnF = @"Host=localhost;" +
                                   @"Port=5432;" +
@@ -80,8 +81,8 @@ namespace Statistics
                                   @"Username={0};" +
                                   @"Password={1};";
                 string strConn = String.Format(strConnF, userName, passWord);
-                _conn = new NpgsqlConnection(strConn);
-                _conn.Open();
+                conn = new NpgsqlConnection(strConn);
+                conn.Open();
 
                 _updateTblList();
 
@@ -90,35 +91,35 @@ namespace Statistics
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
-                if (_conn != null)
+                if (conn != null)
                 {
-                    _conn.Close();
+                    conn.Close();
                 }
             }
         }
 
         public void CloseConnection()
         {
-            if(_conn != null)
+            if(conn != null)
             {
-                _conn.Close();
+                conn.Close();
             }
         }
 
         private void _updateTblList()
         {
             string strSql = @"SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE'";
-            NpgsqlCommand cmd = new NpgsqlCommand(strSql, _conn);
+            NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
             NpgsqlDataReader rdr = cmd.ExecuteReader();
 
-            _form.TblNames.Clear();
+            form.TblNames.Clear();
             Dictionary<string, TableManager> tables_tmp = new Dictionary<string, TableManager>();
             while (rdr.Read())
             {
                 string tbName = rdr.GetString(0);
-                _form.TblNames.Add(tbName);
+                form.TblNames.Add(tbName);
                 if (tables.ContainsKey(tbName)) tables_tmp[tbName] = tables[tbName];
-                else tables_tmp[tbName] = new TableManager(tbName);
+                else tables_tmp[tbName] = new TableManager(tbName, this, form);
             }
             rdr.Close();
             tables = tables_tmp;
@@ -134,7 +135,7 @@ namespace Statistics
                     strSql += String.Format(@", {0} {1}", entry.Key, entry.Value);
                 }
                 strSql += ")";
-                NpgsqlCommand cmd = new NpgsqlCommand(strSql, _conn);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
                 cmd.ExecuteNonQuery();
 
                 _updateTblList();
@@ -149,11 +150,11 @@ namespace Statistics
 
         public void DeleteTable(string tblName)
         {
-            if (_conn == null) return;
+            if (conn == null) return;
             try
             {
                 string strSql = String.Format(@"DROP TABLE {0}", tblName);
-                NpgsqlCommand cmd = new NpgsqlCommand(strSql, _conn);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
                 cmd.ExecuteNonQuery();
 
                 _updateTblList();
@@ -164,11 +165,26 @@ namespace Statistics
             {
                 MessageBox.Show(exc.Message);
             }
+            if(tblName == currtable)
+            {
+                CloseTable();
+            }
         }
-
+        public void CloseTable()
+        {
+            form.CurrTblIndexInTblLists = -1;
+            form.TblLists.Invalidate();
+            currtable = null;
+            form.MainDataGrid.ContextMenuStrip = null;
+            form.MainDataGrid.DataSource = null;
+        }
         public void OpenTable(string tblName)
         {
-            currtable = tables[tblName];
+            currtable = tblName;
+            form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
+            form.TblLists.Invalidate();
+            tables[currtable].show();
+            form.MainDataGrid.ContextMenuStrip = form.CmMainGrid;
         }
 
         public void RenameTable(string oldName, string newName)
@@ -177,7 +193,7 @@ namespace Statistics
             try
             {
                 string strSql = String.Format(@"ALTER TABLE {0} RENAME TO {1}", oldName, newName);
-                NpgsqlCommand cmd = new NpgsqlCommand(strSql, _conn);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, conn);
                 cmd.ExecuteNonQuery();
                 tables[newName] = tables[oldName];
                 tables.Remove(oldName);
@@ -190,6 +206,7 @@ namespace Statistics
             {
                 MessageBox.Show(exc.Message);
             }
+            if (oldName == currtable) OpenTable(newName);
         }
     }
 }

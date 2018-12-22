@@ -15,6 +15,8 @@ namespace Statistics
         private DataBaseManager _dbMgr = null;
         private BindingList<object> tblNames = new BindingList<object>();
         public BindingList<object> TblNames { get => tblNames; set => tblNames = value; }
+        public int CurrTblIndexInTblLists { get => currTblIndexInTblLists; set => currTblIndexInTblLists = value; }
+        private int currTblIndexInTblLists = -1;
 
         public MainForm()
         {
@@ -36,8 +38,8 @@ namespace Statistics
             MainMenu.Location = _getPointFromPercentage(0, 0);
             MainMenu.Size = _getSizeFromPercentage(1, 0.05);
 
-            MainDataView.Location = _getPointFromPercentage(0.25, 0.05);
-            MainDataView.Size = _getSizeFromPercentage(0.75, 0.85);
+            mainDataGrid.Location = _getPointFromPercentage(0.25, 0.05);
+            mainDataGrid.Size = _getSizeFromPercentage(0.75, 0.85);
 
             lblTables.Location = _getPointFromPercentage(0, 0.05);
             lblTables.Size = _getSizeFromPercentage(0.25, 0.1);
@@ -61,7 +63,20 @@ namespace Statistics
             btNextPage.Size = _getSizeFromPercentage(0.25, 0.1);
 
             lblPages.Location = _getPointFromPercentage(0.5, 0.9);
-            lblPages.Size = _getSizeFromPercentage(0.25, 0.1);
+            lblPages.Size = _getSizeFromPercentage(0.25, 0.05);
+
+            lblRecords.Location = _getPointFromPercentage(0.5, 0.95);
+            lblRecords.Size = _getSizeFromPercentage(0.25, 0.05);
+        }
+
+        private void tblLists_DrawItem(object sender, System.Windows.Forms.DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            if(e.Index == CurrTblIndexInTblLists)
+                g.FillRectangle(new SolidBrush(Color.Silver), e.Bounds);
+            e.Graphics.DrawString(tblLists.Items[e.Index].ToString(), e.Font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
+            e.DrawFocusRectangle();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -135,6 +150,11 @@ namespace Statistics
         private void cmTblList_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = (tblLists.SelectedIndex == -1);
+        }
+
+        private void insertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

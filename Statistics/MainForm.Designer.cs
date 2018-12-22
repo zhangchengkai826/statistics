@@ -37,19 +37,24 @@ namespace Statistics
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainDataView = new System.Windows.Forms.DataGridView();
+            this.mainDataGrid = new System.Windows.Forms.DataGridView();
+            this.cmMainGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTables = new System.Windows.Forms.Label();
             this.tblLists = new System.Windows.Forms.ListBox();
+            this.cmTblList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btOpenTbl = new System.Windows.Forms.Button();
             this.btCreateTbl = new System.Windows.Forms.Button();
             this.btDelTbl = new System.Windows.Forms.Button();
             this.lblPages = new System.Windows.Forms.Label();
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
-            this.cmTblList = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblRecords = new System.Windows.Forms.Label();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
+            this.cmMainGrid.SuspendLayout();
             this.cmTblList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,14 +105,38 @@ namespace Statistics
             this.newConnectionToolStripMenuItem.Text = "New Connection";
             this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.newConnectionToolStripMenuItem_Click);
             // 
-            // MainDataView
+            // mainDataGrid
             // 
-            this.MainDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MainDataView.Location = new System.Drawing.Point(206, 27);
-            this.MainDataView.Name = "MainDataView";
-            this.MainDataView.RowTemplate.Height = 23;
-            this.MainDataView.Size = new System.Drawing.Size(594, 476);
-            this.MainDataView.TabIndex = 1;
+            this.mainDataGrid.AllowUserToAddRows = false;
+            this.mainDataGrid.AllowUserToDeleteRows = false;
+            this.mainDataGrid.AllowUserToResizeRows = false;
+            this.mainDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mainDataGrid.Location = new System.Drawing.Point(206, 27);
+            this.mainDataGrid.Name = "mainDataGrid";
+            this.mainDataGrid.RowTemplate.Height = 23;
+            this.mainDataGrid.Size = new System.Drawing.Size(594, 476);
+            this.mainDataGrid.TabIndex = 1;
+            // 
+            // cmMainGrid
+            // 
+            this.cmMainGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.insertToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.cmMainGrid.Name = "contextMenuStrip1";
+            this.cmMainGrid.Size = new System.Drawing.Size(169, 52);
+            // 
+            // insertToolStripMenuItem
+            // 
+            this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
+            this.insertToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.insertToolStripMenuItem.Text = "Insert Row";
+            this.insertToolStripMenuItem.Click += new System.EventHandler(this.insertToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.deleteToolStripMenuItem.Text = "Delete Row";
             // 
             // lblTables
             // 
@@ -130,6 +159,23 @@ namespace Statistics
             this.tblLists.Size = new System.Drawing.Size(188, 349);
             this.tblLists.TabIndex = 3;
             this.tblLists.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tblLists_MouseDown);
+            this.tblLists.DrawMode = DrawMode.OwnerDrawFixed;
+            this.tblLists.DrawItem += new DrawItemEventHandler(tblLists_DrawItem);
+            //
+            // cmTblList
+            // 
+            this.cmTblList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.renameToolStripMenuItem});
+            this.cmTblList.Name = "cmTblList";
+            this.cmTblList.Size = new System.Drawing.Size(133, 28);
+            this.cmTblList.Opening += new System.ComponentModel.CancelEventHandler(this.cmTblList_Opening);
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(132, 24);
+            this.renameToolStripMenuItem.Text = "Rename";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // btOpenTbl
             // 
@@ -168,7 +214,7 @@ namespace Statistics
             // lblPages
             // 
             this.lblPages.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblPages.Location = new System.Drawing.Point(455, 521);
+            this.lblPages.Location = new System.Drawing.Point(455, 506);
             this.lblPages.Name = "lblPages";
             this.lblPages.Size = new System.Drawing.Size(100, 23);
             this.lblPages.TabIndex = 7;
@@ -195,26 +241,22 @@ namespace Statistics
             this.btNextPage.Text = "Next Page";
             this.btNextPage.UseVisualStyleBackColor = true;
             // 
-            // cmTblList
+            // lblRecords
             // 
-            this.cmTblList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.renameToolStripMenuItem});
-            this.cmTblList.Name = "cmTblList";
-            this.cmTblList.Size = new System.Drawing.Size(181, 50);
-            this.cmTblList.Opening += new System.ComponentModel.CancelEventHandler(this.cmTblList_Opening);
-            // 
-            // renameToolStripMenuItem
-            // 
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.renameToolStripMenuItem.Text = "Rename";
-            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            this.lblRecords.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblRecords.Location = new System.Drawing.Point(455, 529);
+            this.lblRecords.Name = "lblRecords";
+            this.lblRecords.Size = new System.Drawing.Size(100, 23);
+            this.lblRecords.TabIndex = 10;
+            this.lblRecords.Text = "0 record(s)";
+            this.lblRecords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 561);
+            this.Controls.Add(this.lblRecords);
             this.Controls.Add(this.btNextPage);
             this.Controls.Add(this.btPrevPage);
             this.Controls.Add(this.lblPages);
@@ -223,7 +265,7 @@ namespace Statistics
             this.Controls.Add(this.btOpenTbl);
             this.Controls.Add(this.tblLists);
             this.Controls.Add(this.lblTables);
-            this.Controls.Add(this.MainDataView);
+            this.Controls.Add(this.mainDataGrid);
             this.Controls.Add(this.MainMenu);
             this.MainMenuStrip = this.MainMenu;
             this.MinimumSize = new System.Drawing.Size(800, 600);
@@ -234,7 +276,8 @@ namespace Statistics
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainDataView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).EndInit();
+            this.cmMainGrid.ResumeLayout(false);
             this.cmTblList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -244,7 +287,7 @@ namespace Statistics
         #endregion
 
         private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.DataGridView MainDataView;
+        private System.Windows.Forms.DataGridView mainDataGrid;
         private System.Windows.Forms.Label lblTables;
         private System.Windows.Forms.ListBox tblLists;
         private System.Windows.Forms.Button btOpenTbl;
@@ -260,6 +303,16 @@ namespace Statistics
         private ToolStripMenuItem newConnectionToolStripMenuItem;
         private ContextMenuStrip cmTblList;
         private ToolStripMenuItem renameToolStripMenuItem;
+        private Label lblRecords;
+        private ContextMenuStrip cmMainGrid;
+        private ToolStripMenuItem insertToolStripMenuItem;
+        private ToolStripMenuItem deleteToolStripMenuItem;
+
+        public Label LblPages { get => lblPages; }
+        public DataGridView MainDataGrid { get => mainDataGrid; }
+        public ContextMenuStrip CmMainGrid { get => cmMainGrid; }
+        public ListBox TblLists { get => tblLists; }
+
     }
 }
 
