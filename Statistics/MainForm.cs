@@ -157,7 +157,6 @@ namespace Statistics
             var hti = MainDataGrid.HitTest(e.X, e.Y);
             if (hti.RowIndex >= 0 && hti.ColumnIndex >= 0)
             {
-                //MainDataGrid.ClearSelection();
                 MainDataGrid.CurrentCell = MainDataGrid[hti.ColumnIndex, hti.RowIndex];
             }
         }

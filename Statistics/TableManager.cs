@@ -159,5 +159,34 @@ namespace Statistics
                 if (dsBackend.ContainsKey(i)) dsBackend.Remove(i);
             showPageAt(currPage);
         }
+
+        public void RenameCol(object sender, EventArgs e)
+        {
+            if (form.MainDataGrid.SelectedCells.Count != 1) return;
+            if (form.MainDataGrid.CurrentCell.ColumnIndex == 0)
+            {
+                MessageBox.Show("This column is read only!");
+                return;
+            }
+            string oldName = form.MainDataGrid.CurrentCell.OwningColumn.Name;
+            RenameColForm diag = new RenameColForm(this, oldName);
+            diag.ShowDialog();
+        }
+        public void RenameColInternal(string oldName, string newName)
+        {
+            if (oldName == newName) return;
+            try
+            {
+                string strSql = String.Format(@"ALTER TABLE {0} RENAME COLUMN {1} TO {2}", Name, oldName, newName);
+                NpgsqlCommand cmd = new NpgsqlCommand(strSql, Owner.Conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            dsBackend.Clear();
+            ShowLastPageInDefaultOrder();
+        }
     }
 }

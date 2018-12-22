@@ -52,6 +52,7 @@ namespace Statistics
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
+            this.renameColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -122,20 +123,21 @@ namespace Statistics
             // 
             this.cmMainGrid.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.insertToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.renameColumnToolStripMenuItem});
             this.cmMainGrid.Name = "contextMenuStrip1";
-            this.cmMainGrid.Size = new System.Drawing.Size(169, 52);
+            this.cmMainGrid.Size = new System.Drawing.Size(196, 98);
             // 
             // insertToolStripMenuItem
             // 
             this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
-            this.insertToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.insertToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.insertToolStripMenuItem.Text = "Insert Row";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.deleteToolStripMenuItem.Text = "Delete Row";
             // 
             // lblTables
@@ -251,6 +253,12 @@ namespace Statistics
             this.lblRecords.Text = "0 record(s)";
             this.lblRecords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // renameColumnToolStripMenuItem
+            // 
+            this.renameColumnToolStripMenuItem.Name = "renameColumnToolStripMenuItem";
+            this.renameColumnToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
+            this.renameColumnToolStripMenuItem.Text = "Rename Column";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -307,6 +315,7 @@ namespace Statistics
         private ContextMenuStrip cmMainGrid;
         private ToolStripMenuItem insertToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem renameColumnToolStripMenuItem;
 
         public Label LblPages { get => lblPages; }
         public DataGridView MainDataGrid { get => mainDataGrid; }
@@ -314,6 +323,7 @@ namespace Statistics
         public ListBox TblLists { get => tblLists; }
         public ToolStripMenuItem InsertToolStripMenuItem { get => insertToolStripMenuItem; }
         public ToolStripMenuItem DeleteToolStripMenuItem { get => deleteToolStripMenuItem; }
+        public ToolStripMenuItem RenameColumnToolStripMenuItem { get => renameColumnToolStripMenuItem; }
         public Label Lblrecords { get => lblRecords; }
     }
 }
