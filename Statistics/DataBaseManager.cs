@@ -16,6 +16,7 @@ namespace Statistics
         private string currtable = null;
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }
+        private EventHandler insertRowHandler = null;
 
         public DataBaseManager(MainForm form)
         {
@@ -177,16 +178,23 @@ namespace Statistics
             currtable = null;
             form.MainDataGrid.ContextMenuStrip = null;
             form.MainDataGrid.DataSource = null;
+            form.InsertToolStripMenuItem.Click -= insertRowHandler;
+            insertRowHandler = null;
+            form.Lblrecords.Text = "0 record(s)";
+            form.LblPages.Text = "0 / 0";
         }
         public void OpenTable(string tblName)
         {
+            if (currtable != null) form.InsertToolStripMenuItem.Click -= insertRowHandler;
             currtable = tblName;
             form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
             form.TblLists.Invalidate();
             tables[currtable].show();
             form.MainDataGrid.ContextMenuStrip = form.CmMainGrid;
+            insertRowHandler = new System.EventHandler(tables[currtable].InsertRow);
+            form.InsertToolStripMenuItem.Click += insertRowHandler;
+            form.Lblrecords.Text = tables[currtable].NumRecords + " record(s)";
         }
-
         public void RenameTable(string oldName, string newName)
         {
             if (oldName == newName) return;

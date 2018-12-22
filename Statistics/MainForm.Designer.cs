@@ -130,7 +130,6 @@ namespace Statistics
             this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
             this.insertToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
             this.insertToolStripMenuItem.Text = "Insert Row";
-            this.insertToolStripMenuItem.Click += new System.EventHandler(this.insertToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -312,7 +311,8 @@ namespace Statistics
         public DataGridView MainDataGrid { get => mainDataGrid; }
         public ContextMenuStrip CmMainGrid { get => cmMainGrid; }
         public ListBox TblLists { get => tblLists; }
-
+        public ToolStripMenuItem InsertToolStripMenuItem { get => insertToolStripMenuItem; }
+        public Label Lblrecords { get => lblRecords; }
     }
 }
 

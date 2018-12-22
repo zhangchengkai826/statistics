@@ -151,10 +151,5 @@ namespace Statistics
         {
             e.Cancel = (tblLists.SelectedIndex == -1);
         }
-
-        private void insertToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

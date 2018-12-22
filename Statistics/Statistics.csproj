@@ -71,6 +71,12 @@
       <DependentUpon>CreateUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataBaseManager.cs" />
+    <Compile Include="InsertForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InsertForm.Designer.cs">
+      <DependentUpon>InsertForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateUserForm.resx">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsertForm.resx">
+      <DependentUpon>InsertForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -12,14 +12,61 @@ namespace Statistics
     public class TableManager
     {
         private string name = "";
+        public string Name { get => name; }
         private Int64 numRecords = -1;
+        public Int64 NumRecords
+        {
+            get
+            {
+                if (numRecords != -1) return numRecords;
+                try
+                {
+                    string strSql = String.Format(@"SELECT COUNT(*) FROM {0}", name);
+                    NpgsqlCommand cmd = new NpgsqlCommand(strSql, owner.Conn);
+                    NumRecords = (Int64)cmd.ExecuteScalar();
+                    return numRecords;
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                    NumRecords = -1;
+                    return numRecords;
+                }
+            }
+            set
+            {
+                numRecords = value;
+                form.Lblrecords.Text = numRecords + " record(s)";
+            }
+        }
+        private int numPages = -1;
+        public int NumPages
+        {
+            get
+            {
+                int newNumPages;
+                if (NumRecords < 0) {
+                    newNumPages = -1;
+                }
+                else if (NumRecords == 0) newNumPages = 1;
+                else newNumPages = (int)((NumRecords - 1) / RECORDS_PER_PAGE) + 1;
+                if (newNumPages != numPages)
+                {
+                    numPages = newNumPages;
+                    form.LblPages.Text = currPage + " / " + numPages;
+                }
+                return numPages;  
+            }
+        }
         private DataBaseManager owner;
+        public DataBaseManager Owner { get => owner; }
         private MainForm form = null;
         private static readonly int RECORDS_PER_PAGE = 100;
         private int currPage = -1;
         private string orderBy = "_id_internal";
         private string order = "ASC";
         private DataTable dt = null;
+        public DataTable Dt { get => dt; }
         private Dictionary<int, DataSet> dsBackend = new Dictionary<int, DataSet>();
         public TableManager(string name, DataBaseManager dbMgr, MainForm form)
         {
@@ -27,31 +74,9 @@ namespace Statistics
             this.owner = dbMgr;
             this.form = form;
         }
-        private int _getNumPages()
-        {
-            if (numRecords < 0) return -1;
-            else if (numRecords == 0) return 1;
-            else return (int)(numRecords-1 / RECORDS_PER_PAGE) + 1;
-        }
-        public Int64 GetNumRecords()
-        {
-            try
-            {
-                string strSql = String.Format(@"SELECT COUNT(*) FROM {0}", name);
-                NpgsqlCommand cmd = new NpgsqlCommand(strSql, owner.Conn);
-                numRecords = (Int64)cmd.ExecuteScalar();
-                return numRecords;
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-                numRecords = -1;
-                return numRecords;
-            }
-        }
         public void show()
         {
-            if(currPage == -1)
+            if (currPage == -1)
             {
                 showPageAt(1);
             }
@@ -63,7 +88,6 @@ namespace Statistics
         private DataTable _normalizeDt(DataTable dt)
         {
             dt.Columns[0].ColumnName = "id";
-            dt.Columns[0].ReadOnly = true;
             for(int i = 0; i < dt.Rows.Count; i++)
             {
                 dt.Rows[i][0] = (currPage - 1) * RECORDS_PER_PAGE + i + 1;
@@ -72,17 +96,13 @@ namespace Statistics
         }
         public void showPageAt(int page)
         {
-            if (numRecords < 0) // first open that page
-            {
-                GetNumRecords();
-            }
-            if (page <= 0 || page > _getNumPages())
+            if (page <= 0 || page > NumPages)
             {
                 MessageBox.Show("Page index out of range!");
                 return;
             }
             currPage = page;
-            form.LblPages.Text = String.Format(@"{0} / {1}", currPage, _getNumPages());
+            form.LblPages.Text = String.Format(@"{0} / {1}", currPage, NumPages);
             if (!dsBackend.ContainsKey(currPage))
             {
                 try
@@ -101,6 +121,21 @@ namespace Statistics
             dt = dsBackend[currPage].Tables[0].Copy();
             dt = _normalizeDt(dt);
             form.MainDataGrid.DataSource = dt;
+        }
+
+        private void ShowLastPageInDefaultOrder()
+        {
+            orderBy = "_id_internal";
+            order = "ASC";
+            showPageAt(NumPages);
+        }
+
+        public void InsertRow(object sender, EventArgs e)
+        {
+            InsertForm diag = new InsertForm(form, this);
+            diag.ShowDialog();
+            if (dsBackend.ContainsKey(NumPages)) dsBackend.Remove(NumPages);
+            ShowLastPageInDefaultOrder();
         }
     }
 }
