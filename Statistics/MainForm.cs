@@ -176,5 +176,15 @@ namespace Statistics
         {
             e.Cancel = MainDataGrid.IsCurrentCellInEditMode;
         }
+
+        private void sortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable == null)
+            {
+                MessageBox.Show("Please open a table first!");
+                return;
+            }
+            _dbMgr.Tables[_dbMgr.Currtable].SortRecordsByColumn();
+        }
     }
 }

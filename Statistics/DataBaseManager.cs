@@ -13,6 +13,7 @@ namespace Statistics
         private NpgsqlConnection conn = null;
         private MainForm form = null;
         private Dictionary<string, TableManager> tables = new Dictionary<string, TableManager>();
+        public Dictionary<string, TableManager> Tables { get => tables; }
         private string currtable = null;
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }

@@ -97,6 +97,12 @@
     <Compile Include="RenameTblForm.Designer.cs">
       <DependentUpon>RenameTblForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SortForm.Designer.cs">
+      <DependentUpon>SortForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StartNewConnForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RenameTblForm.resx">
       <DependentUpon>RenameTblForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SortForm.resx">
+      <DependentUpon>SortForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StartNewConnForm.resx">
       <DependentUpon>StartNewConnForm.cs</DependentUpon>

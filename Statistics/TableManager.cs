@@ -63,11 +63,15 @@ namespace Statistics
         private MainForm form = null;
         private static readonly int RECORDS_PER_PAGE = 100;
         private int currPage = -1;
+        public int CurrPage { get => currPage; }
         private string orderBy = "_id_internal";
+        public string OrderBy { get => orderBy; set => orderBy = value; }
         private string order = "ASC";
+        public string Order { get => order; set => order = value; }
         private DataTable dt = null;
         public DataTable Dt { get => dt; }
         private Dictionary<int, DataSet> dsBackend = new Dictionary<int, DataSet>();
+        public Dictionary<int, DataSet> DsBackend { get => dsBackend; }
         public TableManager(string name, DataBaseManager dbMgr, MainForm form)
         {
             this.name = name;
@@ -78,11 +82,11 @@ namespace Statistics
         {
             if (currPage == -1)
             {
-                showPageAt(1);
+                ShowPageAt(1);
             }
             else
             {
-                showPageAt(currPage);
+                ShowPageAt(currPage);
             }
         }
         private DataTable _normalizeDt(DataTable dt)
@@ -94,7 +98,7 @@ namespace Statistics
             }
             return dt;
         }
-        public void showPageAt(int page)
+        public void ShowPageAt(int page)
         {
             if (page <= 0 || page > NumPages)
             {
@@ -128,7 +132,7 @@ namespace Statistics
         {
             orderBy = "_id_internal";
             order = "ASC";
-            showPageAt(NumPages);
+            ShowPageAt(NumPages);
         }
 
         public void InsertRow(object sender, EventArgs e)
@@ -158,7 +162,7 @@ namespace Statistics
             }
             for(int i=currPage;i<=NumPages+1;i++)
                 if (dsBackend.ContainsKey(i)) dsBackend.Remove(i);
-            showPageAt(currPage);
+            ShowPageAt(currPage);
         }
 
         public void RenameCol(object sender, EventArgs e)
@@ -187,7 +191,7 @@ namespace Statistics
                 MessageBox.Show(exc.Message);
             }
             dsBackend.Clear();
-            showPageAt(currPage);
+            ShowPageAt(currPage);
         }
 
         public void UpdateData(object sender, DataGridViewCellEventArgs e)
@@ -196,7 +200,7 @@ namespace Statistics
             if(value == null || value == DBNull.Value || String.IsNullOrWhiteSpace(value.ToString()))
             {
                 MessageBox.Show("Please specify a data!");
-                showPageAt(currPage);
+                ShowPageAt(currPage);
                 return;
             }
             int id = (int)form.MainDataGrid.CurrentRow.Cells[0].Value;
@@ -214,7 +218,18 @@ namespace Statistics
                 MessageBox.Show(exc.Message);
             }
             dsBackend.Remove(currPage);
-            showPageAt(currPage);
+            ShowPageAt(currPage);
+        }
+
+        public void SortRecordsByColumn()
+        {
+            List<string> columnNames = new List<string>();
+            for(int i = 1; i < form.MainDataGrid.Columns.Count; i++)
+            {
+                columnNames.Add(form.MainDataGrid.Columns[i].Name);
+            }
+            SortForm diag = new SortForm(this, columnNames, order);
+            diag.ShowDialog();
         }
     }
 }

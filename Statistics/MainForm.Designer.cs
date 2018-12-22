@@ -53,6 +53,8 @@ namespace Statistics
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
+            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -64,7 +66,8 @@ namespace Statistics
             this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.databaseToolStripMenuItem});
+            this.databaseToolStripMenuItem,
+            this.tableToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(800, 27);
@@ -127,7 +130,7 @@ namespace Statistics
             this.deleteToolStripMenuItem,
             this.renameColumnToolStripMenuItem});
             this.cmMainGrid.Name = "contextMenuStrip1";
-            this.cmMainGrid.Size = new System.Drawing.Size(196, 98);
+            this.cmMainGrid.Size = new System.Drawing.Size(196, 76);
             this.cmMainGrid.Opening += new System.ComponentModel.CancelEventHandler(this.cmMainGrid_Opening);
             // 
             // insertToolStripMenuItem
@@ -261,6 +264,21 @@ namespace Statistics
             this.lblRecords.Text = "0 record(s)";
             this.lblRecords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // tableToolStripMenuItem
+            // 
+            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sortToolStripMenuItem});
+            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
+            this.tableToolStripMenuItem.Text = "Table";
+            // 
+            // sortToolStripMenuItem
+            // 
+            this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
+            this.sortToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.sortToolStripMenuItem.Text = "Sort";
+            this.sortToolStripMenuItem.Click += new System.EventHandler(this.sortToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -318,6 +336,8 @@ namespace Statistics
         private ToolStripMenuItem insertToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem renameColumnToolStripMenuItem;
+        private ToolStripMenuItem tableToolStripMenuItem;
+        private ToolStripMenuItem sortToolStripMenuItem;
 
         public Label LblPages { get => lblPages; }
         public DataGridView MainDataGrid { get => mainDataGrid; }
