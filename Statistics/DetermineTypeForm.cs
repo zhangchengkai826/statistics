@@ -104,7 +104,7 @@ namespace Statistics
                                 values += "'" + vals[i] + "'";
                                 if (i != vals.Length - 1) values += ", ";
                             }
-                            strSql = String.Format(@"INSERT INTO {0} ({1}) VALUES ({2})", tblName, keys, values);
+                            string lclStrSql = String.Format(@"INSERT INTO {0} ({1}) VALUES ({2})", tblName, keys, values);
                             ThreadPool.QueueUserWorkItem(o=> 
                             {
                                 NpgsqlConnection lclConn = null;
@@ -112,14 +112,15 @@ namespace Statistics
                                 {
                                     lclConn = dbMgr.Conn.CloneWith(dbMgr.Conn.ConnectionString);
                                     lclConn.Open();
-                                    NpgsqlCommand cmd = new NpgsqlCommand(strSql, lclConn);
+                                    NpgsqlCommand cmd = new NpgsqlCommand(lclStrSql, lclConn);
                                     cmd.ExecuteNonQuery();
                                     lclConn.Close();
                                     Interlocked.Increment(ref numRecordsCnt);
                                 }
                                 catch
                                 {
-                                    lclConn.Close();
+                                    if(lclConn != null)
+                                        lclConn.Close();
                                 }
                             });
                         }

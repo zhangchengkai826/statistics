@@ -258,5 +258,13 @@ namespace Statistics
                 _dbMgr.Tables[_dbMgr.Currtable].UpdateData(sender, e);
             }
         }
+
+        private void exportCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].ExportTable();
+            }
+        }
     }
 }

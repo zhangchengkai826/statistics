@@ -99,6 +99,7 @@ namespace Statistics
             this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
             this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
             this.exportCSVToolStripMenuItem.Text = "Export Table";
+            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSVToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 

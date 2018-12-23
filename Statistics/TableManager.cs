@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
 using System.Data;
+using System.IO;
 
 namespace Statistics
 {
@@ -240,6 +241,65 @@ namespace Statistics
         public void ShowNextPage()
         {
             ShowPageAt(currPage + 1);
+        }
+
+        public void ExportTable()
+        {
+            if(NumRecords < 1)
+            {
+                MessageBox.Show("The table is empty!");
+                return;
+            }
+            NpgsqlConnection lclConn = null;
+            try
+            {
+                lclConn = owner.Conn.CloneWith(owner.Conn.ConnectionString);
+                SaveFileDialog diag = new SaveFileDialog();
+                diag.Filter = @"CSV File|*.csv";
+                if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(diag.FileName))
+                    {
+                        string hdr = "";
+                        for(int i=1;i<form.MainDataGrid.ColumnCount; i++)
+                        {
+                            hdr += form.MainDataGrid.Columns[i].Name + ", ";
+                        }
+                        hdr = hdr.Substring(0, hdr.Length - 2);
+                        sw.WriteLine(hdr);
+                        for(int pageId = 1; pageId <= NumPages; pageId++)
+                        {
+                            string strSql = String.Format(@"SELECT * FROM {0} ORDER BY {1} {2} LIMIT {3} OFFSET {4}", Name, OrderBy, Order, RECORDS_PER_PAGE, (pageId-1)*RECORDS_PER_PAGE);
+                            try
+                            {
+                                NpgsqlDataAdapter lclDa = new NpgsqlDataAdapter(strSql, Owner.Conn);
+                                DataSet lclDs = new DataSet();
+                                lclDa.Fill(lclDs);
+                                DataTable lclDt = lclDs.Tables[0];
+                                for(int recId = 0; recId < RECORDS_PER_PAGE; recId++)
+                                {
+                                    string v = "";
+                                    for(int i = 1; i < lclDt.Columns.Count; i++)
+                                    {
+                                        v += lclDt.Rows[recId][i] + ", ";
+                                    }
+                                    v = v.Substring(0, v.Length - 2);
+                                    sw.WriteLine(v);
+                                }
+                            }
+                            catch
+                            {
+                                lclConn.Open();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+                if (lclConn != null) lclConn.Close();
+            }
         }
     }
 }
