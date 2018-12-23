@@ -22,7 +22,8 @@ namespace Statistics
         private EventHandler deleteRowHandler = null;
         private EventHandler renameColHandler = null;
         private DataGridViewCellEventHandler updateDataHandler = null;
-
+        private string usrConnStr;
+       
         public DataBaseManager(MainForm form)
         {
             this.form = form;
@@ -86,8 +87,8 @@ namespace Statistics
                                   @"Database={0}_db;" +
                                   @"Username={0};" +
                                   @"Password={1};";
-                string strConn = String.Format(strConnF, userName, passWord);
-                conn = new NpgsqlConnection(strConn);
+                usrConnStr = String.Format(strConnF, userName, passWord);
+                conn = new NpgsqlConnection(usrConnStr);
                 conn.Open();
 
                 UpdateTableList();

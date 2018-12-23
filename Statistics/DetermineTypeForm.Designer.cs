@@ -34,8 +34,8 @@
             this.btImport = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbTblName = new System.Windows.Forms.TextBox();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.progressBarTimer = new System.Windows.Forms.Timer(this.components);
+            this.lblProgress = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MainGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,25 +89,28 @@
             this.tbTblName.Size = new System.Drawing.Size(188, 21);
             this.tbTblName.TabIndex = 7;
             // 
-            // progressBar
-            // 
-            this.progressBar.Location = new System.Drawing.Point(483, 417);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(305, 23);
-            this.progressBar.TabIndex = 8;
-            // 
             // progressBarTimer
             // 
             this.progressBarTimer.Enabled = true;
             this.progressBarTimer.Interval = 1000;
             this.progressBarTimer.Tick += new System.EventHandler(this.progressBarTimer_Tick);
             // 
+            // lblProgress
+            // 
+            this.lblProgress.Font = new System.Drawing.Font("Segoe UI Light", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblProgress.Location = new System.Drawing.Point(462, 415);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(326, 25);
+            this.lblProgress.TabIndex = 8;
+            this.lblProgress.Text = "0 insert / 0 discover";
+            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // DetermineTypeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.tbTblName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btImport);
@@ -128,7 +131,7 @@
         private System.Windows.Forms.Button btImport;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbTblName;
-        private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Timer progressBarTimer;
+        private System.Windows.Forms.Label lblProgress;
     }
 }
