@@ -59,6 +59,8 @@ namespace Statistics
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
             this.importTableDiag = new System.Windows.Forms.OpenFileDialog();
+            this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.composeStatisticalReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -71,7 +73,8 @@ namespace Statistics
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.databaseToolStripMenuItem,
-            this.tableToolStripMenuItem});
+            this.tableToolStripMenuItem,
+            this.analyzeToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(800, 27);
@@ -319,6 +322,21 @@ namespace Statistics
             this.importTableDiag.FileName = "openFileDialog1";
             this.importTableDiag.Filter = "CSV Files|*.csv";
             // 
+            // analyzeToolStripMenuItem
+            // 
+            this.analyzeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.composeStatisticalReportToolStripMenuItem});
+            this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
+            this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(84, 23);
+            this.analyzeToolStripMenuItem.Text = "Analyze";
+            // 
+            // composeStatisticalReportToolStripMenuItem
+            // 
+            this.composeStatisticalReportToolStripMenuItem.Name = "composeStatisticalReportToolStripMenuItem";
+            this.composeStatisticalReportToolStripMenuItem.Size = new System.Drawing.Size(312, 24);
+            this.composeStatisticalReportToolStripMenuItem.Text = "Compose Statistical Report";
+            this.composeStatisticalReportToolStripMenuItem.Click += new System.EventHandler(this.composeStatisticalReportToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -382,6 +400,8 @@ namespace Statistics
         private ToolStripMenuItem exportCSVToolStripMenuItem;
         private OpenFileDialog importTableDiag;
         private ToolStripMenuItem goToPageToolStripMenuItem;
+        private ToolStripMenuItem analyzeToolStripMenuItem;
+        private ToolStripMenuItem composeStatisticalReportToolStripMenuItem;
 
         public Label LblPages { get => lblPages; }
         public DataGridView MainDataGrid { get => mainDataGrid; }

@@ -70,6 +70,13 @@
     <Compile Include="CreateUserForm.Designer.cs">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataAnalyzer.cs" />
+    <Compile Include="DataAnalyzerWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataAnalyzerWizard.Designer.cs">
+      <DependentUpon>DataAnalyzerWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataBaseManager.cs" />
     <Compile Include="DetermineTypeForm.cs">
       <SubType>Form</SubType>
@@ -95,6 +102,7 @@
     <Compile Include="InsertForm.Designer.cs">
       <DependentUpon>InsertForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ISavable.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,12 +135,16 @@
     <Compile Include="StartNewConnForm.Designer.cs">
       <DependentUpon>StartNewConnForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StatisticalReport.cs" />
     <Compile Include="TableManager.cs" />
     <EmbeddedResource Include="CreateTblForm.resx">
       <DependentUpon>CreateTblForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateUserForm.resx">
       <DependentUpon>CreateUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataAnalyzerWizard.resx">
+      <DependentUpon>DataAnalyzerWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DetermineTypeForm.resx">
       <DependentUpon>DetermineTypeForm.cs</DependentUpon>

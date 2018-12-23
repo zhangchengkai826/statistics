@@ -266,5 +266,14 @@ namespace Statistics
                 _dbMgr.Tables[_dbMgr.Currtable].ExportTable();
             }
         }
+
+        private void composeStatisticalReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                DataAnalyzer dataAnalyzer = new DataAnalyzer(_dbMgr, this);
+                dataAnalyzer.StartAnalysis();
+            }
+        }
     }
 }
