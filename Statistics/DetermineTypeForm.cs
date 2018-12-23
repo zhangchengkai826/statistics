@@ -23,6 +23,7 @@ namespace Statistics
         private bool readFinish = false;
         private int numRecordsCnt = 0;
         private Stopwatch sw;
+        private string tblName;
         public DetermineTypeForm(string[] colNames, string[] egVals, string _fileName, DataBaseManager _dbMgr)
         {
             InitializeComponent();
@@ -46,8 +47,13 @@ namespace Statistics
 
         private void btImport_Click(object sender, EventArgs e)
         {
+            btImport.Enabled = false;
+            btImport.Text = "Importing...";
+            tbTblName.Enabled = false;
+            MainGrid.Enabled = false;
+
             sw = System.Diagnostics.Stopwatch.StartNew();
-            string tblName = tbTblName.Text;
+            tblName = tbTblName.Text;
             string strSql = String.Format(@"CREATE TABLE {0} (_id_internal serial PRIMARY KEY", tblName);
             for (int i = 0; i < MainGrid.RowCount; i++)
             {
@@ -64,8 +70,13 @@ namespace Statistics
                 MessageBox.Show(exc.Message);
                 totalRecords = numRecordsCnt = 0;
                 readFinish = false;
+                btImport.Enabled = true;
+                btImport.Text = "Import!";
+                tbTblName.Enabled = true;
+                MainGrid.Enabled = true;
                 return;
             }
+            dbMgr.MakeTableUnOpenable(tblName);
             Task importTk = Task.Run(() =>
             {
                 try
@@ -121,20 +132,27 @@ namespace Statistics
                     strSql = String.Format(@"DROP TABLE {0}", tblName);
                     NpgsqlCommand cmd = new NpgsqlCommand(strSql, dbMgr.Conn);
                     cmd.ExecuteNonQuery();
+
                     totalRecords = numRecordsCnt = 0;
                     readFinish = false;
+                    btImport.Enabled = true;
+                    btImport.Text = "Import!";
+                    tbTblName.Enabled = true;
+                    MainGrid.Enabled = true;
                 }
             });
         }
 
         private void progressBarTimer_Tick(object sender, EventArgs e)
         {
-            lblProgress.Text = String.Format(@"{0} insert / {1} discover", numRecordsCnt, totalRecords);
+            lblProgress.Text = String.Format(@"{0} insert succeeded / {1} discovered", numRecordsCnt, totalRecords);
             if (readFinish && totalRecords == numRecordsCnt)
             {
+                progressBarTimer.Stop();
                 dbMgr.UpdateTableList();
                 sw.Stop();
                 MessageBox.Show(String.Format(@"Table imported successfully! [Total Time Used {0}s]", (double)sw.ElapsedMilliseconds / 1000.0));
+                dbMgr.MakeTableOpenable(tblName);
                 Close();
             }
         }

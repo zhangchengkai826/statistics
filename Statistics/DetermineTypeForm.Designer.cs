@@ -116,6 +116,10 @@
             this.Controls.Add(this.btImport);
             this.Controls.Add(this.lblTblName);
             this.Controls.Add(this.MainGrid);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(816, 489);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "DetermineTypeForm";
             this.Text = "Import Table Wizard";
             ((System.ComponentModel.ISupportInitialize)(this.MainGrid)).EndInit();

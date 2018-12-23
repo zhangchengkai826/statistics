@@ -19,7 +19,24 @@ namespace Statistics
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }
         private string usrConnStr;
-       
+        private HashSet<string> tblsPreventOpening = new HashSet<string>();
+
+        public void MakeTableUnOpenable(string name)
+        {
+            tblsPreventOpening.Add(name);
+        }
+        public void MakeTableOpenable(string name)
+        {
+            if (tblsPreventOpening.Contains(name))
+                tblsPreventOpening.Remove(name);
+        }
+        public bool IsTableOpenable(string name)
+        {
+            if (tblsPreventOpening.Contains(name))
+                return false;
+            return true;
+        }
+
         public DataBaseManager(MainForm form)
         {
             this.form = form;
@@ -192,6 +209,11 @@ namespace Statistics
         }
         public void OpenTable(string tblName)
         {
+            if (!IsTableOpenable(tblName))
+            {
+                MessageBox.Show("This table is still being imported, please wait!");
+                return;
+            }
             currtable = tblName;
             form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
             form.TblLists.Invalidate();
