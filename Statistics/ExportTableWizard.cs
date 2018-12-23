@@ -32,6 +32,7 @@ namespace Statistics
         {
             if (!isTaskStart)
             {
+                isTaskStart = true;
                 sw = System.Diagnostics.Stopwatch.StartNew();
                 Task importTk = Task.Run(() =>
                 {
@@ -82,10 +83,10 @@ namespace Statistics
                         MessageBox.Show(exc.Message);
                         if (lclConn != null) lclConn.Close();
                         table.IsBeingExported = false;
+                        isTaskStart = false;
                         Close();
                     }
                 });
-                isTaskStart = true;
             }
             lblProgress.Text = String.Format(@"{0} page(s) exported / {1} page(s) in total", pageExported, table.NumPages);
             if(pageExported == table.NumPages)
@@ -94,8 +95,15 @@ namespace Statistics
                 sw.Stop();
                 MessageBox.Show(String.Format(@"Table exported successfully! [Total Time Used {0}s]", (double)sw.ElapsedMilliseconds / 1000.0));
                 table.IsBeingExported = false;
+                isTaskStart = false;
                 Close();
             }
+        }
+
+        private void ExportTableWizard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MessageBox.Show("Table is being exported, please do not close this window. You can edit other tables while waiting.");
+            e.Cancel = isTaskStart;
         }
     }
 }

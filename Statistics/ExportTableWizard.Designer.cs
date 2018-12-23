@@ -61,6 +61,7 @@
             this.MinimizeBox = false;
             this.Name = "ExportTableWizard";
             this.Text = "Export Table Wizard";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExportTableWizard_FormClosing);
             this.ResumeLayout(false);
 
         }
