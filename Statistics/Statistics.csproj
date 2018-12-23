@@ -77,6 +77,12 @@
     <Compile Include="DetermineTypeForm.Designer.cs">
       <DependentUpon>DetermineTypeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExportTableWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportTableWizard.Designer.cs">
+      <DependentUpon>ExportTableWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="GoToPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DetermineTypeForm.resx">
       <DependentUpon>DetermineTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportTableWizard.resx">
+      <DependentUpon>ExportTableWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GoToPageForm.resx">
       <DependentUpon>GoToPageForm.cs</DependentUpon>

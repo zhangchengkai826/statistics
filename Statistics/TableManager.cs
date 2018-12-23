@@ -15,6 +15,8 @@ namespace Statistics
         private string name = "";
         public string Name { get => name; }
         private Int64 numRecords = -1;
+        private bool isBeingExported = false;
+        public bool IsBeingExported { get => isBeingExported; set => isBeingExported = value; }
         public Int64 NumRecords
         {
             get
@@ -62,7 +64,8 @@ namespace Statistics
         private DataBaseManager owner;
         public DataBaseManager Owner { get => owner; }
         private MainForm form = null;
-        private static readonly int RECORDS_PER_PAGE = 100;
+        public MainForm AssociatiedForm { get => form; }
+        public static readonly int RECORDS_PER_PAGE = 100;
         private int currPage = -1;
         public int CurrPage { get => currPage; }
         private string orderBy = "_id_internal";
@@ -138,6 +141,11 @@ namespace Statistics
 
         public void InsertRow(object sender, EventArgs e)
         {
+            if (isBeingExported)
+            {
+                MessageBox.Show("This table is being exported, please wait or edit other tables!");
+                return;
+            }
             InsertForm diag = new InsertForm(form, this);
             diag.ShowDialog();
             if (dsBackend.ContainsKey(NumPages)) dsBackend.Remove(NumPages);
@@ -146,6 +154,11 @@ namespace Statistics
 
         public void DeleteRow(object sender, EventArgs e)
         {
+            if (isBeingExported)
+            {
+                MessageBox.Show("This table is being exported, please wait or edit other tables!");
+                return;
+            }
             if (form.MainDataGrid.SelectedCells.Count < 1) return;
             try
             {
@@ -168,6 +181,11 @@ namespace Statistics
 
         public void RenameCol(object sender, EventArgs e)
         {
+            if (isBeingExported)
+            {
+                MessageBox.Show("This table is being exported, please wait or edit other tables!");
+                return;
+            }
             if (form.MainDataGrid.SelectedCells.Count != 1) return;
             if (form.MainDataGrid.CurrentCell.ColumnIndex == 0)
             {
@@ -197,6 +215,11 @@ namespace Statistics
 
         public void UpdateData(object sender, DataGridViewCellEventArgs e)
         {
+            if (isBeingExported)
+            {
+                MessageBox.Show("This table is being exported, please wait or edit other tables!");
+                return;
+            }
             object value = form.MainDataGrid[e.ColumnIndex, e.RowIndex].Value;
             if(value == null || value == DBNull.Value || String.IsNullOrWhiteSpace(value.ToString()))
             {
@@ -224,6 +247,11 @@ namespace Statistics
 
         public void SortRecordsByColumn()
         {
+            if (isBeingExported)
+            {
+                MessageBox.Show("This table is being exported, please wait or edit other tables!");
+                return;
+            }
             List<string> columnNames = new List<string>();
             for(int i = 1; i < form.MainDataGrid.Columns.Count; i++)
             {
@@ -250,56 +278,13 @@ namespace Statistics
                 MessageBox.Show("The table is empty!");
                 return;
             }
-            NpgsqlConnection lclConn = null;
-            try
-            {
-                lclConn = owner.Conn.CloneWith(owner.Conn.ConnectionString);
-                SaveFileDialog diag = new SaveFileDialog();
-                diag.Filter = @"CSV File|*.csv";
-                if (diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    using (StreamWriter sw = new StreamWriter(diag.FileName))
-                    {
-                        string hdr = "";
-                        for(int i=1;i<form.MainDataGrid.ColumnCount; i++)
-                        {
-                            hdr += form.MainDataGrid.Columns[i].Name + ", ";
-                        }
-                        hdr = hdr.Substring(0, hdr.Length - 2);
-                        sw.WriteLine(hdr);
-                        for(int pageId = 1; pageId <= NumPages; pageId++)
-                        {
-                            string strSql = String.Format(@"SELECT * FROM {0} ORDER BY {1} {2} LIMIT {3} OFFSET {4}", Name, OrderBy, Order, RECORDS_PER_PAGE, (pageId-1)*RECORDS_PER_PAGE);
-                            try
-                            {
-                                NpgsqlDataAdapter lclDa = new NpgsqlDataAdapter(strSql, Owner.Conn);
-                                DataSet lclDs = new DataSet();
-                                lclDa.Fill(lclDs);
-                                DataTable lclDt = lclDs.Tables[0];
-                                for(int recId = 0; recId < RECORDS_PER_PAGE; recId++)
-                                {
-                                    string v = "";
-                                    for(int i = 1; i < lclDt.Columns.Count; i++)
-                                    {
-                                        v += lclDt.Rows[recId][i] + ", ";
-                                    }
-                                    v = v.Substring(0, v.Length - 2);
-                                    sw.WriteLine(v);
-                                }
-                            }
-                            catch
-                            {
-                                lclConn.Open();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-                if (lclConn != null) lclConn.Close();
-            }
+            
+            SaveFileDialog diag = new SaveFileDialog();
+            diag.Filter = @"CSV File|*.csv";
+            if (!(diag.ShowDialog() == System.Windows.Forms.DialogResult.OK)) return;
+            isBeingExported = true;
+            ExportTableWizard wizard = new ExportTableWizard(this, diag.FileName);
+            wizard.Show();
         }
     }
 }
