@@ -34,7 +34,7 @@ namespace Statistics
             {
                 isTaskStart = true;
                 sw = System.Diagnostics.Stopwatch.StartNew();
-                Task importTk = Task.Run(() =>
+                Task exportTk = Task.Run(() =>
                 {
                     NpgsqlConnection lclConn = null;
                     try

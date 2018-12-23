@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tbStatNeedsAnalyze = new System.Windows.Forms.ListBox();
             this.btStart = new System.Windows.Forms.Button();
             this.cbSrc2 = new System.Windows.Forms.ComboBox();
@@ -39,8 +40,9 @@
             this.btAdd = new System.Windows.Forms.Button();
             this.btRemove = new System.Windows.Forms.Button();
             this.btSave = new System.Windows.Forms.Button();
-            this.lblTblName = new System.Windows.Forms.Label();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.tbReport = new System.Windows.Forms.TextBox();
+            this.progressTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // tbStatNeedsAnalyze
@@ -151,15 +153,15 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
-            // lblTblName
+            // lblProgress
             // 
-            this.lblTblName.Font = new System.Drawing.Font("Segoe UI Light", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblTblName.Location = new System.Drawing.Point(313, 407);
-            this.lblTblName.Name = "lblTblName";
-            this.lblTblName.Size = new System.Drawing.Size(462, 25);
-            this.lblTblName.TabIndex = 17;
-            this.lblTblName.Text = "0 stats analyzed / 0 remained";
-            this.lblTblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblProgress.Font = new System.Drawing.Font("Segoe UI Light", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblProgress.Location = new System.Drawing.Point(313, 407);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(462, 25);
+            this.lblProgress.TabIndex = 17;
+            this.lblProgress.Text = "0 stats analyzed / 0 remained";
+            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tbReport
             // 
@@ -170,13 +172,18 @@
             this.tbReport.Size = new System.Drawing.Size(762, 132);
             this.tbReport.TabIndex = 18;
             // 
+            // progressTimer
+            // 
+            this.progressTimer.Interval = 1000;
+            this.progressTimer.Tick += new System.EventHandler(this.progressTimer_Tick);
+            // 
             // DataAnalyzerWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tbReport);
-            this.Controls.Add(this.lblTblName);
+            this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.btRemove);
             this.Controls.Add(this.btAdd);
@@ -208,7 +215,8 @@
         private System.Windows.Forms.Button btAdd;
         private System.Windows.Forms.Button btRemove;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Label lblTblName;
+        private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.TextBox tbReport;
+        private System.Windows.Forms.Timer progressTimer;
     }
 }

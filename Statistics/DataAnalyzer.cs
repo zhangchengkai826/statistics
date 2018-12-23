@@ -10,6 +10,7 @@ namespace Statistics
     {
         private StatisticalReport report;
         private DataBaseManager dbMgr;
+        public DataBaseManager DbMgr { get => dbMgr; }
         private MainForm form;
 
         public DataAnalyzer(DataBaseManager _dbMgr, MainForm _form)
