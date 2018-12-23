@@ -226,5 +226,37 @@ namespace Statistics
                 _dbMgr.Tables[_dbMgr.Currtable].ShowPageAt(diag.PageGoTo);
             }
         }
+
+        private void insertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].InsertRow(sender, e);
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].DeleteRow(sender, e);
+            }
+        }
+
+        private void renameColumnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].RenameCol(sender, e);
+            }
+        }
+
+        private void mainDataGrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (_dbMgr.Currtable != null)
+            {
+                _dbMgr.Tables[_dbMgr.Currtable].UpdateData(sender, e);
+            }
+        }
     }
 }

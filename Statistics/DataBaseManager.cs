@@ -18,10 +18,6 @@ namespace Statistics
         private string currtable = null;
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }
-        private EventHandler insertRowHandler = null;
-        private EventHandler deleteRowHandler = null;
-        private EventHandler renameColHandler = null;
-        private DataGridViewCellEventHandler updateDataHandler = null;
         private string usrConnStr;
        
         public DataBaseManager(MainForm form)
@@ -191,39 +187,16 @@ namespace Statistics
             currtable = null;
             form.MainDataGrid.ContextMenuStrip = null;
             form.MainDataGrid.DataSource = null;
-            form.InsertToolStripMenuItem.Click -= insertRowHandler;
-            form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
-            form.RenameColumnToolStripMenuItem.Click -= renameColHandler;
-            form.MainDataGrid.CellEndEdit += updateDataHandler;
-            insertRowHandler = null;
-            deleteRowHandler = null;
-            renameColHandler = null;
-            updateDataHandler = null;
             form.Lblrecords.Text = "0 record(s)";
             form.LblPages.Text = "0 / 0";
         }
         public void OpenTable(string tblName)
         {
-            if (currtable != null)
-            {
-                form.InsertToolStripMenuItem.Click -= insertRowHandler;
-                form.DeleteToolStripMenuItem.Click -= deleteRowHandler;
-                form.RenameColumnToolStripMenuItem.Click -= renameColHandler;
-                form.MainDataGrid.CellEndEdit -= updateDataHandler;
-            }
             currtable = tblName;
             form.CurrTblIndexInTblLists = form.TblLists.FindStringExact(currtable);
             form.TblLists.Invalidate();
             tables[currtable].show();
             form.MainDataGrid.ContextMenuStrip = form.CmMainGrid;
-            insertRowHandler = new System.EventHandler(tables[currtable].InsertRow);
-            deleteRowHandler = new System.EventHandler(tables[currtable].DeleteRow);
-            renameColHandler = new System.EventHandler(tables[currtable].RenameCol);
-            updateDataHandler = new DataGridViewCellEventHandler(tables[currtable].UpdateData);
-            form.InsertToolStripMenuItem.Click += insertRowHandler;
-            form.DeleteToolStripMenuItem.Click += deleteRowHandler;
-            form.RenameColumnToolStripMenuItem.Click += renameColHandler;
-            form.MainDataGrid.CellEndEdit += updateDataHandler;
             form.Lblrecords.Text = tables[currtable].NumRecords + " record(s)";
         }
         public void RenameTable(string oldName, string newName)

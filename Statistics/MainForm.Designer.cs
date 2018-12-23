@@ -33,10 +33,15 @@ namespace Statistics
             this.components = new System.ComponentModel.Container();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goToPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainDataGrid = new System.Windows.Forms.DataGridView();
             this.cmMainGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,12 +58,7 @@ namespace Statistics
             this.btPrevPage = new System.Windows.Forms.Button();
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
-            this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importTableDiag = new System.Windows.Forms.OpenFileDialog();
-            this.goToPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -86,6 +86,19 @@ namespace Statistics
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 23);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // importCSVToolStripMenuItem
+            // 
+            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
+            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
+            this.importCSVToolStripMenuItem.Text = "Import Table";
+            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
+            // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
+            this.exportCSVToolStripMenuItem.Text = "Export Table";
             // 
             // editToolStripMenuItem
             // 
@@ -116,6 +129,29 @@ namespace Statistics
             this.newConnectionToolStripMenuItem.Text = "New Connection";
             this.newConnectionToolStripMenuItem.Click += new System.EventHandler(this.newConnectionToolStripMenuItem_Click);
             // 
+            // tableToolStripMenuItem
+            // 
+            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.goToPageToolStripMenuItem,
+            this.sortToolStripMenuItem});
+            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
+            this.tableToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
+            this.tableToolStripMenuItem.Text = "Table";
+            // 
+            // goToPageToolStripMenuItem
+            // 
+            this.goToPageToolStripMenuItem.Name = "goToPageToolStripMenuItem";
+            this.goToPageToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.goToPageToolStripMenuItem.Text = "Go To Page";
+            this.goToPageToolStripMenuItem.Click += new System.EventHandler(this.goToPageToolStripMenuItem_Click);
+            // 
+            // sortToolStripMenuItem
+            // 
+            this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
+            this.sortToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
+            this.sortToolStripMenuItem.Text = "Sort";
+            this.sortToolStripMenuItem.Click += new System.EventHandler(this.sortToolStripMenuItem_Click);
+            // 
             // mainDataGrid
             // 
             this.mainDataGrid.AllowUserToAddRows = false;
@@ -127,6 +163,7 @@ namespace Statistics
             this.mainDataGrid.RowTemplate.Height = 23;
             this.mainDataGrid.Size = new System.Drawing.Size(594, 476);
             this.mainDataGrid.TabIndex = 1;
+            this.mainDataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.mainDataGrid_CellEndEdit);
             this.mainDataGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.mainDataGrid_DataError);
             this.mainDataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainDataGrid_MouseDown);
             // 
@@ -145,18 +182,21 @@ namespace Statistics
             this.insertToolStripMenuItem.Name = "insertToolStripMenuItem";
             this.insertToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.insertToolStripMenuItem.Text = "Insert Row";
+            this.insertToolStripMenuItem.Click += new System.EventHandler(this.insertToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.deleteToolStripMenuItem.Text = "Delete Row";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // renameColumnToolStripMenuItem
             // 
             this.renameColumnToolStripMenuItem.Name = "renameColumnToolStripMenuItem";
             this.renameColumnToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
             this.renameColumnToolStripMenuItem.Text = "Rename Column";
+            this.renameColumnToolStripMenuItem.Click += new System.EventHandler(this.renameColumnToolStripMenuItem_Click);
             // 
             // lblTables
             // 
@@ -273,46 +313,10 @@ namespace Statistics
             this.lblRecords.Text = "0 record(s)";
             this.lblRecords.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tableToolStripMenuItem
-            // 
-            this.tableToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.goToPageToolStripMenuItem,
-            this.sortToolStripMenuItem});
-            this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
-            this.tableToolStripMenuItem.Size = new System.Drawing.Size(66, 23);
-            this.tableToolStripMenuItem.Text = "Table";
-            // 
-            // sortToolStripMenuItem
-            // 
-            this.sortToolStripMenuItem.Name = "sortToolStripMenuItem";
-            this.sortToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.sortToolStripMenuItem.Text = "Sort";
-            this.sortToolStripMenuItem.Click += new System.EventHandler(this.sortToolStripMenuItem_Click);
-            // 
-            // importCSVToolStripMenuItem
-            // 
-            this.importCSVToolStripMenuItem.Name = "importCSVToolStripMenuItem";
-            this.importCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
-            this.importCSVToolStripMenuItem.Text = "Import Table";
-            this.importCSVToolStripMenuItem.Click += new System.EventHandler(this.importCSVToolStripMenuItem_Click);
-            // 
-            // exportCSVToolStripMenuItem
-            // 
-            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
-            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(186, 24);
-            this.exportCSVToolStripMenuItem.Text = "Export Table";
-            // 
             // importTableDiag
             // 
             this.importTableDiag.FileName = "openFileDialog1";
             this.importTableDiag.Filter = "CSV Files|*.csv";
-            // 
-            // goToPageToolStripMenuItem
-            // 
-            this.goToPageToolStripMenuItem.Name = "goToPageToolStripMenuItem";
-            this.goToPageToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
-            this.goToPageToolStripMenuItem.Text = "Go To Page";
-            this.goToPageToolStripMenuItem.Click += new System.EventHandler(this.goToPageToolStripMenuItem_Click);
             // 
             // MainForm
             // 
