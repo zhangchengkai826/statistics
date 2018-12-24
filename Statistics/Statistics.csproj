@@ -50,6 +50,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +82,13 @@
       <DependentUpon>DataAnalyzerWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="DataBaseManager.cs" />
+    <Compile Include="DataVisualizer.cs" />
+    <Compile Include="DataVisualizerWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataVisualizerWizard.Designer.cs">
+      <DependentUpon>DataVisualizerWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="DetermineTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataAnalyzerWizard.resx">
       <DependentUpon>DataAnalyzerWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataVisualizerWizard.resx">
+      <DependentUpon>DataVisualizerWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DetermineTypeForm.resx">
       <DependentUpon>DetermineTypeForm.cs</DependentUpon>

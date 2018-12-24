@@ -216,5 +216,35 @@ namespace Statistics
                 tbReport.Text += block;
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbStatType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbSrc1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSrc2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbSrc2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

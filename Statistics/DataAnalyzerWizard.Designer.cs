@@ -73,6 +73,7 @@
             this.cbSrc2.Name = "cbSrc2";
             this.cbSrc2.Size = new System.Drawing.Size(121, 20);
             this.cbSrc2.TabIndex = 7;
+            this.cbSrc2.SelectedIndexChanged += new System.EventHandler(this.cbSrc2_SelectedIndexChanged);
             // 
             // lblSrc2
             // 
@@ -83,6 +84,7 @@
             this.lblSrc2.Size = new System.Drawing.Size(149, 25);
             this.lblSrc2.TabIndex = 8;
             this.lblSrc2.Text = "Source Column 2";
+            this.lblSrc2.Click += new System.EventHandler(this.lblSrc2_Click);
             // 
             // label1
             // 
@@ -93,6 +95,7 @@
             this.label1.Size = new System.Drawing.Size(146, 25);
             this.label1.TabIndex = 10;
             this.label1.Text = "Source Column 1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // cbSrc1
             // 
@@ -101,6 +104,7 @@
             this.cbSrc1.Name = "cbSrc1";
             this.cbSrc1.Size = new System.Drawing.Size(121, 20);
             this.cbSrc1.TabIndex = 9;
+            this.cbSrc1.SelectedIndexChanged += new System.EventHandler(this.cbSrc1_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -111,6 +115,7 @@
             this.label3.Size = new System.Drawing.Size(114, 25);
             this.label3.TabIndex = 12;
             this.label3.Text = "Statistic Type";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // cbStatType
             // 
@@ -119,6 +124,7 @@
             this.cbStatType.Name = "cbStatType";
             this.cbStatType.Size = new System.Drawing.Size(121, 20);
             this.cbStatType.TabIndex = 11;
+            this.cbStatType.SelectedIndexChanged += new System.EventHandler(this.cbStatType_SelectedIndexChanged);
             this.cbStatType.SelectionChangeCommitted += new System.EventHandler(this.cbStatType_SelectionChangeCommitted);
             // 
             // btAdd

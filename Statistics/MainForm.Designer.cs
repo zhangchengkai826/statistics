@@ -42,6 +42,8 @@ namespace Statistics
             this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goToPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.composeStatisticalReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainDataGrid = new System.Windows.Forms.DataGridView();
             this.cmMainGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.insertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,8 +61,8 @@ namespace Statistics
             this.btNextPage = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
             this.importTableDiag = new System.Windows.Forms.OpenFileDialog();
-            this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.composeStatisticalReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.visualizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.composeGraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDataGrid)).BeginInit();
             this.cmMainGrid.SuspendLayout();
@@ -74,7 +76,8 @@ namespace Statistics
             this.editToolStripMenuItem,
             this.databaseToolStripMenuItem,
             this.tableToolStripMenuItem,
-            this.analyzeToolStripMenuItem});
+            this.analyzeToolStripMenuItem,
+            this.visualizeToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(800, 27);
@@ -155,6 +158,21 @@ namespace Statistics
             this.sortToolStripMenuItem.Size = new System.Drawing.Size(168, 24);
             this.sortToolStripMenuItem.Text = "Sort";
             this.sortToolStripMenuItem.Click += new System.EventHandler(this.sortToolStripMenuItem_Click);
+            // 
+            // analyzeToolStripMenuItem
+            // 
+            this.analyzeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.composeStatisticalReportToolStripMenuItem});
+            this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
+            this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(84, 23);
+            this.analyzeToolStripMenuItem.Text = "Analyze";
+            // 
+            // composeStatisticalReportToolStripMenuItem
+            // 
+            this.composeStatisticalReportToolStripMenuItem.Name = "composeStatisticalReportToolStripMenuItem";
+            this.composeStatisticalReportToolStripMenuItem.Size = new System.Drawing.Size(312, 24);
+            this.composeStatisticalReportToolStripMenuItem.Text = "Compose Statistical Report";
+            this.composeStatisticalReportToolStripMenuItem.Click += new System.EventHandler(this.composeStatisticalReportToolStripMenuItem_Click);
             // 
             // mainDataGrid
             // 
@@ -322,20 +340,20 @@ namespace Statistics
             this.importTableDiag.FileName = "openFileDialog1";
             this.importTableDiag.Filter = "CSV Files|*.csv";
             // 
-            // analyzeToolStripMenuItem
+            // visualizeToolStripMenuItem
             // 
-            this.analyzeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.composeStatisticalReportToolStripMenuItem});
-            this.analyzeToolStripMenuItem.Name = "analyzeToolStripMenuItem";
-            this.analyzeToolStripMenuItem.Size = new System.Drawing.Size(84, 23);
-            this.analyzeToolStripMenuItem.Text = "Analyze";
+            this.visualizeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.composeGraphToolStripMenuItem});
+            this.visualizeToolStripMenuItem.Name = "visualizeToolStripMenuItem";
+            this.visualizeToolStripMenuItem.Size = new System.Drawing.Size(102, 23);
+            this.visualizeToolStripMenuItem.Text = "Visualize";
             // 
-            // composeStatisticalReportToolStripMenuItem
+            // composeGraphToolStripMenuItem
             // 
-            this.composeStatisticalReportToolStripMenuItem.Name = "composeStatisticalReportToolStripMenuItem";
-            this.composeStatisticalReportToolStripMenuItem.Size = new System.Drawing.Size(312, 24);
-            this.composeStatisticalReportToolStripMenuItem.Text = "Compose Statistical Report";
-            this.composeStatisticalReportToolStripMenuItem.Click += new System.EventHandler(this.composeStatisticalReportToolStripMenuItem_Click);
+            this.composeGraphToolStripMenuItem.Name = "composeGraphToolStripMenuItem";
+            this.composeGraphToolStripMenuItem.Size = new System.Drawing.Size(195, 24);
+            this.composeGraphToolStripMenuItem.Text = "Compose Graph";
+            this.composeGraphToolStripMenuItem.Click += new System.EventHandler(this.composeGraphToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -402,6 +420,8 @@ namespace Statistics
         private ToolStripMenuItem goToPageToolStripMenuItem;
         private ToolStripMenuItem analyzeToolStripMenuItem;
         private ToolStripMenuItem composeStatisticalReportToolStripMenuItem;
+        private ToolStripMenuItem visualizeToolStripMenuItem;
+        private ToolStripMenuItem composeGraphToolStripMenuItem;
 
         public Label LblPages { get => lblPages; }
         public DataGridView MainDataGrid { get => mainDataGrid; }

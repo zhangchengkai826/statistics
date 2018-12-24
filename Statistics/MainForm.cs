@@ -275,5 +275,14 @@ namespace Statistics
                 dataAnalyzer.StartAnalysis();
             }
         }
+
+        private void composeGraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_dbMgr.Currtable != null && MainDataGrid.Rows.Count >= 2) 
+            {
+                DataVisualizer dataVisualizer = new DataVisualizer(_dbMgr, this);
+                dataVisualizer.MakeGraph();
+            }
+        }
     }
 }
