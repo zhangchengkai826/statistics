@@ -18,7 +18,6 @@ namespace Statistics
         private string currtable = null;
         public string Currtable { get => currtable; }
         public NpgsqlConnection Conn { get => conn; }
-        private string usrConnStr;
         private HashSet<string> tblsPreventOpening = new HashSet<string>();
 
         public void MakeTableUnOpenable(string name)
@@ -91,6 +90,9 @@ namespace Statistics
         {
             try
             {
+                tables.Clear();
+                currtable = null;
+                tblsPreventOpening.Clear();
                 if (conn != null)
                 {
                     conn.Close();
@@ -100,8 +102,7 @@ namespace Statistics
                                   @"Database={0}_db;" +
                                   @"Username={0};" +
                                   @"Password={1};";
-                usrConnStr = String.Format(strConnF, userName, passWord);
-                conn = new NpgsqlConnection(usrConnStr);
+                conn = new NpgsqlConnection(String.Format(strConnF, userName, passWord));
                 conn.Open();
 
                 UpdateTableList();

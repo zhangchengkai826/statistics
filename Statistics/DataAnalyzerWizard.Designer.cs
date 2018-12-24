@@ -43,6 +43,7 @@
             this.lblProgress = new System.Windows.Forms.Label();
             this.tbReport = new System.Windows.Forms.TextBox();
             this.progressTimer = new System.Windows.Forms.Timer(this.components);
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // tbStatNeedsAnalyze
@@ -177,6 +178,11 @@
             this.progressTimer.Interval = 1000;
             this.progressTimer.Tick += new System.EventHandler(this.progressTimer_Tick);
             // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "Text File|*.txt|XML File|*.xml|JSON File|*.json";
+            this.saveFileDialog.FilterIndex = 2;
+            // 
             // DataAnalyzerWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -218,5 +224,6 @@
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.TextBox tbReport;
         private System.Windows.Forms.Timer progressTimer;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }

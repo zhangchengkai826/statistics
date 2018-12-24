@@ -21,6 +21,8 @@ namespace Statistics
         private DataAnalyzer analyzer;
         private bool isTaskRunning = false;
         private bool isReportReady = false;
+        private Stopwatch sw;
+        private List<StatisticFigure> finishedStats = new List<StatisticFigure>();
 
         public DataAnalyzerWizard(DataAnalyzer _analyzer)
         {
@@ -50,22 +52,25 @@ namespace Statistics
             if (allTask < 1) return;
             isReportReady = false;
             tbReport.Clear();
+            finishedStats.Clear();
+            finishedTask = 0;
             btSave.Enabled = false;
             btStart.Enabled = false;
             btStart.Text = "Analyzing...";
             btAdd.Enabled = false;
             btRemove.Enabled = false;
             progressTimer.Start();
+            sw = Stopwatch.StartNew();
             Task AnalyzeTk = Task.Run(() =>
             {
                 isTaskRunning = true;
-                Stopwatch sw = Stopwatch.StartNew();
                 try
                 {
                     Parallel.For(0, allTask, index =>
                     {
                         StatisticFigure s = (StatisticFigure)tbStatNeedsAnalyze.Items[index];
                         Analyze(ref s);
+                        finishedStats.Add(s);
                     });
                     isReportReady = true;
                     isTaskRunning = false;
@@ -132,7 +137,17 @@ namespace Statistics
 
         private void btSave_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    analyzer.SaveReport(finishedStats.ToArray(), saveFileDialog.FileName);
+                }
+            }
+            catch(Exception exe)
+            {
+                MessageBox.Show(exe.Message);
+            }
         }
 
         private void cbStatType_SelectionChangeCommitted(object sender, EventArgs e)
@@ -188,6 +203,17 @@ namespace Statistics
                 btAdd.Enabled = true;
                 btRemove.Enabled = true;
                 btSave.Enabled = true;
+                sw.Stop();
+                ShowReport();
+                MessageBox.Show(String.Format(@"Data analysis finished: {0} succeeds, {1} in total. [Time elapsed: {2}s]", finishedTask, allTask, (double)sw.ElapsedMilliseconds / 1000.0));
+            }
+        }
+        private void ShowReport()
+        {
+            foreach(StatisticFigure s in finishedStats)
+            {
+                string block = String.Format("Statistic Type:  {0}\r\nParameters:  {1}\r\nValue:  {2}\r\n\r\n", s.type, String.Join("  ", s.parameters), s.value);
+                tbReport.Text += block;
             }
         }
     }

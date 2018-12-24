@@ -22,8 +22,15 @@ namespace Statistics
 
         private void btCreate_Click(object sender, EventArgs e)
         {
-            _dbMgr.createUser(tbUsrName.Text, tbPw.Text);
-            Close();
+            if (tbUsrName.Text != null && tbPw.Text != null && !String.IsNullOrWhiteSpace(tbUsrName.Text) && !String.IsNullOrWhiteSpace(tbPw.Text))
+            {
+                _dbMgr.createUser(tbUsrName.Text, tbPw.Text);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password!");
+            }
         }
     }
 }

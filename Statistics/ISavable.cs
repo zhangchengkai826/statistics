@@ -8,6 +8,6 @@ namespace Statistics
 {
     interface ISavable
     {
-        void Save();
+        void Save(string fileName);
     }
 }

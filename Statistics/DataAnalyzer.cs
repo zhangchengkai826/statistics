@@ -34,5 +34,11 @@ namespace Statistics
             }
             return cols;
         }
+
+        public void SaveReport(StatisticFigure[] stats, string fileName)
+        {
+            report = new StatisticalReport(fileName.Split('.')[0], stats);
+            report.Save(fileName);
+        }
     }
 }

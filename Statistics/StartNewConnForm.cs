@@ -21,8 +21,15 @@ namespace Statistics
 
         private void btConn_Click(object sender, EventArgs e)
         {
-            _dbMgr.StartConnection(tbUsrName.Text, tbPw.Text);
-            Close();
+            if (tbUsrName.Text != null && tbPw.Text != null && !String.IsNullOrWhiteSpace(tbUsrName.Text) && !String.IsNullOrWhiteSpace(tbPw.Text))
+            {
+                _dbMgr.StartConnection(tbUsrName.Text, tbPw.Text);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password!");
+            }
         }
     }
 }
